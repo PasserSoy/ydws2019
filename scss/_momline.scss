@@ -1,0 +1,62 @@
+.tit .linep {// 母线
+  background-color: $line-color;
+}
+.config {
+  .equip {// 整根支线
+    .busbar {// 母排
+      background-color: $line-color;
+    }
+    .upc,.downc {// 触头
+      border: 2px solid $line-color;
+    }
+    .swi {// 开关打开
+      @include back(-401px);
+      &.swi1 {// 开关闭合
+        @include back(-455px);
+      }
+    }
+    .tool:before {// 支线竖线
+      background-color: $line-color;
+    }
+    .relay {// 传感器
+      li i {
+        @include back(-559px);
+      }
+    }
+    .uparrow {// 进线柜上箭头
+      @include back(-373px);
+    }
+    .jx {// 进线柜、联络柜设备样式
+      @include back(-50px);
+      .sen {
+        @include back(-579px);
+      }
+    }
+    .downarrow {// 出线柜下箭头
+      @include back(-387px);
+    }
+    .cg {// 出线柜设备样式
+      @include back(0);
+      .sen {
+        @include back(-579px);
+      }
+    }
+    .sensor {// 出线柜箭头下传感器
+      @include back(-559px);
+    }
+    .pt {// pt柜
+      @include back(-100px);
+    }
+    .ts {// 提升柜
+      @include back(-509px);
+    }
+  }
+}
+.contact .cable {// 联络柜
+  background-color: $line-color;
+}
+.pt {
+  .ptname {
+    color: $line-color;
+  }
+}

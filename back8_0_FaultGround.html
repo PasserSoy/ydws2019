@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="assets/css/bootstrap.min.css?v=1.6.22" rel="stylesheet" />
+	<link rel="stylesheet" href="css/style.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+	<title>报警信息列表</title>
+	<style>
+		body {margin: auto;}
+		*{ font-family: Arial, "微软雅黑"; }
+		.icon-plus, .icon-search { background: #2494f9; }
+		.btn_search,.btn_reset, .page_btn { border-radius: 3px; border: none; color: white; padding: 0 10px; }
+		.btn_search,.btn_reset { height: 33px; line-height: 33px; padding: 0 10px; margin-left: 10px; background: #2494f9; }
+		.search_style { margin: 10px 0; }
+		.tab { float: right; padding: 0 10px; }
+		.tab label { width: 80px; height: 30px; line-height: 30px; text-align: center; background: #454545; border-radius: 3px; color: white; cursor: pointer; }
+		.active { background: #2494f9 !important; }
+		.table_menu_list {height: auto!important;position: relative;display: none;}
+		/*筛选条件*/
+		.search_content {display: flex;flex-wrap: wrap;padding: 7px 0;border-bottom: 1px solid #ddd;}
+		.search_content li {display: flex;align-items: center;}
+		.search_content li .ts {margin: 0 3px;background: transparent;}
+		.search_content li label {margin: 0 5px;background: transparent;}
+		.search_content li select,.search_content li input{width: 140px;margin-left: 0;}
+		.search_content li.timeli input {width: 140px;}
+		/*打印导出*/
+		.table_menu_list .tools {margin-bottom: 7px;text-align: right;}
+		.table_menu_list .tools a {color: #2494f9;margin: 0 2px;cursor: pointer;}
+		.table_menu_list .tools a:hover {opacity: .8;}
+		/*请求*/
+		.loading { display: none; position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9; background-color: rgba(134, 134, 134, 0.1); }
+		/* // loading动画 */
+		.loadingD { width: 100px; height: 100px;position: absolute; z-index: 9; left: 50%; top: 50%; margin-top: -50px; margin-left: -50px;text-align: center;background: transparent;}
+		.loadC {width: 50px; height: 50px; background-color: #000;animation: rotateplane 1.2s infinite ease-in-out;margin: auto;}
+		.loadingD p {white-space: nowrap;font-size: 12px;padding: 0;color: #000 !important;background: #fff;margin-top: 25px;}
+		@keyframes rotateplane {
+		0% { transform: perspective(120px) }
+		50% { transform: perspective(120px) rotateY(180deg) }
+		100% { transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+		}
+		select[name=faulttype] option[data-type] {display: none;}
+		select[name=faulttype] option[data-type='0'] {display: block;}
+		.layui-layer-setwin {display: none;}
+		body .layui-layer { min-width: 100px; background-color: #000; filter: alpha(opacity=60); background-color: rgba(0,0,0,.6); color: #fff; border: none;}
+	</style>
+</head>
+<body>
+	<div class="loadjy">
+		<div><span><i></i><i></i><i></i></span></div>
+	</div>
+	<div id="noTableData"> <img src="./images/two/7.1.png" alt="无数据">
+		<p>抱歉，没有数据啊...</p>
+	</div>
+	<div class="page-content clearfix">
+		<div id="Member_Ratings">
+			<div class="d_Confirm_Order_style">
+				<div class="search_style">
+					<ul class="search_content clearfix">
+						<li><label class="l_f">处理状态:</label>
+							<select name="isSolve" class="text_add">
+								<option id="isSolve" value="true">是</option>
+								<option value="false" selected>否</option>
+							</select>
+						</li>
+						<li><label class="l_f">监测站:</label>
+							<select name="station" class="text_add"></select>
+						</li>
+						<li><label class="l_f">报警级别:</label>
+							<select name="alarmLeve" class="text_add">
+								<option value="0">请选择</option>
+								<option value="1">中级报警</option>
+								<option value="2">高级报警</option>
+							</select>
+						</li>
+						<li><label class="l_f">故障类型:</label>
+							<select name="faulttype" class="text_add">
+								<option data-type="0" value="">请选择</option><!-- 1中级 2高级 -->
+								<option data-type="2" value="10">金属接地</option>
+								<option data-type="1" value="11">系统过电压</option>
+								<option data-type="2" value="12">过压</option>
+								<option data-type="2" value="13">PT断线</option>
+								<option data-type="2" value="14">欠压</option>
+								<option data-type="2" value="15">系统短路</option>
+								<option data-type="2" value="16">弧光接地</option>
+								<option data-type="2" value="20">过热</option>
+								<option data-type="2" value="21">湿度超标</option>
+								<option data-type="2" value="22">泄漏</option>
+								<option data-type="1" value="23">电量不足</option>
+							</select>
+						</li>
+						<li class="timeli"><label class="l_f">故障时间:</label>
+							<input type="date" id="timeStart" name="start" placeholder="起始时间">
+							<span class="ts">-</span>
+							<input type="date" id="timeEnd" name="end" placeholder="结束时间">
+						</li>
+
+						<li><button type="button" class="btn_search"><i class="icon-search"></i>查询</button></li>
+						<li><button type="button" class="btn_reset"><i class="icon-search"></i>重置</button></li>
+
+					</ul>
+				</div>
+
+				<div class="table_menu_list">
+					<div class="loading">
+						<div class="loadingD">
+							<div class="loadC"></div>
+							<p>正在请求数据...</p>
+						</div>
+					</div><!-- 请求 -->
+					<!-- <h3 class="tools"><a class="print">打印</a>|<a class="export">导出</a></h3> -->
+					<table class="table table-striped table-bordered table-hover" id="sample-table">
+						<thead>
+							<tr>
+								<th width="25">序号</th>
+								<th width="80">监测站名称</th>
+								<th width="80">报警级别</th>
+								<th width="80">故障线路</th>
+								<th width="80">故障类型</th>
+								<th width="80">设备类型</th>
+								<th width="80">故障发生时间</th>
+								<th width="80">故障解除时间</th>
+								<th width="80">故障详情</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+						</tbody>
+					</table>
+
+					<div class="myPage" id="footer">
+						<div class="ui_frt ljypage">
+							<input type="button" value="< 上一页" class="ui_input_btn01 page_btn beforPage" rel="prev" /> 共
+							<span class="ui_txt_bold04 numtotal">1</span>页&nbsp;&nbsp;&nbsp; 当前第
+							<span class="ui_txt_bold04 nowpage">1</span>页 共
+							<span class="ui_txt_bold04 numtotalpp">0</span>条&nbsp;&nbsp;&nbsp;
+							<input type="button" value="下一页 >" class="ui_input_btn01 page_btn laterPage" rel="after" />
+							<input type="text" class="jumpint"> <button class="jumpsure">跳转</button>
+							<select id="pagechange">
+								<option value="10">10条/页</option>
+								<option value="15">15条/页</option>
+								<option value="20">20条/页</option>
+								<option value="25">25条/页</option>
+								<option value="30">30条/页</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--添加用户图层-->
+	<div class="change_Pass_style" id="add_menber_style" style="display:none">
+		<ul class="xg_style" style="margin-left: 5%;padding: 10px">
+			<li><label class="label_name">账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;：</label><span class="add_name"><input
+					 id="account_add" value="" name="账号" type="text" style="width: 300px" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li><label class="label_name">职&nbsp;&nbsp;&nbsp;&nbsp;位&nbsp;&nbsp;&nbsp;&nbsp;：</label><span class="add_name"><input
+					 id="position_add" value="" name="职位" type="text" style="width: 300px" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li class="password"><label class="label_name">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;&nbsp;&nbsp;：</label><span
+				 class="add_name"><input id="password_add" value="" name="密码" type="text" style="width: 300px" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li><label class="label_name">电话号码：</label><span class="add_name"><input id="mobilePhone_add" value="" name="联系方式"
+					 type="text" style="width: 300px" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li class="selected_role"><label class="l_f">角色选择：</label>
+				<table width="500" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+					<tr>
+						<th>　</th>
+						<td>
+							<div>
+								<div>
+									<select multiple="multiple" id="select1" style="width:150px;height:200px; float:left; border:4px #A0A0A4 outset; padding:4px; ">
+										<!-- <option value="超级管理员">超级管理员</option>
+                                 <option value="普通管理员">普通管理员</option>
+                                 <option value="信息发布员">信息发布员</option>
+                                 <option value="财务管理员">财务管理员</option>
+                                 <option value="产品管理员">产品管理员</option>
+                                 <option value="资源管理员">资源管理员</option>
+                                 <option value="管理员">管理员</option>-->
+									</select>
+								</div>
+								<div id="select_" style="float:left;margin-top: 10px;">
+									<span id="add">
+										<input type="button" class="btn_select" value=">" />
+									</span><br />
+									<span id="add_all">
+										<input type="button" class="btn_select" value=">>" />
+									</span> <br />
+									<span id="remove">
+										<input type="button" class="btn_select" value="<" />
+									</span><br />
+									<span id="remove_all">
+										<input type="button" class="btn_select" value="<<" />
+									</span>
+								</div>
+								<div>
+									<select multiple="multiple" id="select2" style="width: 150px;height:200px; float:lfet;border:4px #A0A0A4 outset; padding:4px;">
+									</select>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</li>
+
+		</ul>
+	</div>
+</body>
+
+</html>
+<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+<script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+<script src="assets/layer/layer.js?v=1.6.22" type="text/javascript"></script>
+<script src="js/common.js?v=1.6.22"></script>
+<script src="js/pagejs/back8-0.js?v=1.6.22"></script>

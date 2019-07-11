@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="js/layui/css/layui.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/myIndex.css?v=1.6.22">
+	<title>主页</title>
+</head>
+<body>
+	<div class="loadjy op">
+		<div><span><i></i><i></i><i></i></span></div>
+  </div>
+  <div id="mainbody">
+    <div class="left"><!-- 分三个部分 -->
+      <!-- 日期筛选 -->
+      <ul class="dateChoose">
+        <li id="day" class="active">日</li>
+        <li id="week">周</li>
+        <li id="month">月</li>
+        <li id="quarter">季</li>
+        <li id="year">年</li>
+      </ul>
+      <!-- 高级报警 -->
+      <div class="highAlarm">
+        <h2><!-- 标题 -->
+          <p class="name">高级报警</p>
+          <p class="count">
+            总数<span class="gaoJiCount">0</span>起
+          </p>
+        </h2>
+        <ul class="content"><!-- 内容 -->
+          <li class="hgjd">
+            <p class="name"> 弧光接地 </p>
+            <p class="no"> <span class="hgjd">0</span>次 </p>
+          </li>
+          <li class="jsjd">
+            <p class="name"> 金属接地 </p>
+            <p class="no"> <span class="jsjd">0</span>次 </p>
+          </li>
+          <li class="gy">
+            <p class="name"> 过压 </p>
+            <p class="no"> <span class="gdy">0</span>次 </p>
+          </li>
+          <li class="qy">
+            <p class="name"> 欠压 </p>
+            <p class="no"> <span class="qysjb">0</span>次 </p>
+          </li>
+          <!-- <li class="sy">
+            <p class="name"> 失压 </p>
+            <p class="no"> <span>0</span>次 </p>
+          </li> -->
+          <li class="ptdx">
+            <p class="name"> PT断线 </p>
+            <p class="no"> <span class="ptdx">0</span>次 </p>
+          </li>
+          <li class="gr">
+            <p class="name"> 过热 </p>
+            <p class="no"> <span class="gr">0</span>次 </p>
+          </li>
+          <li class="sdcb">
+            <p class="name"> 湿度超标 </p>
+            <p class="no"> <span class="sdcb">0</span>次 </p>
+          </li>
+          <li class="xielou">
+            <p class="name"> 泄漏 </p>
+            <p class="no"> <span class="xl">0</span>次 </p>
+          </li>
+          <!-- <li class="gdy">
+            <p class="name"> 过电压保护器故障报警 </p>
+            <p class="no"> <span>0</span>次 </p>
+          </li> -->
+          <li class="xtdl">
+            <p class="name"> 系统短路 </p>
+            <p class="no"> <span class="xtdl">0</span>次 </p>
+          </li>
+        </ul>
+      </div>
+      <!-- 中级报警 -->
+      <div class="midAlarm">
+        <h2><!-- 标题 -->
+          <p class="name">中级报警</p>
+          <p class="count">
+            总数<span class="zhongJiCount">0</span>起
+          </p>
+        </h2>
+        <ul class="content"><!-- 内容 -->
+          <li class="xtgdy">
+            <p class="name"> 系统过电压 </p>
+            <p class="no"> <span class="xtgdy">0</span>次 </p>
+          </li>
+          <li class="dlbz">
+            <p class="name"> 电量不足 </p>
+            <p class="no"> <span class="dlbz">0</span>次 </p>
+          </li>
+          <!-- <li class="wd">
+            <p class="name"> 温度传感器电池电量不足 </p>
+            <p class="no"> <span>0</span>次 </p>
+          </li>
+          <li class="gdybhq">
+            <p class="name"> 过电压保护器电池电量不足 </p>
+            <p class="no"> <span>0</span>次 </p>
+          </li>
+          <li class="yc">
+            <p class="name"> 异常 </p>
+            <p class="no"> <span>0</span>次 </p>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="middle">
+      <!-- 地图 -->
+      <div class="map">
+        <div class="filter"><!-- 查询 -->
+          <form class="layui-form" action="">
+            <div class="layui-input-inline">
+              <select name="stationAddress" lay-filter="selectS">
+                <option value="">全部区域</option>
+              </select>
+            </div>
+            <div class="layui-input-inline search">
+              <input type="text" name="stationName" autocomplete="off" class="layui-input" placeholder="输入名称搜索">
+              <button class="layui-btn searchBtn" lay-submit="" lay-filter="search"></button>
+            </div>
+            <div class="layui-input-inline tabs"><!-- 地图列表切换 -->
+              <i class="mapI active"><img src="images/two/position.png" alt=""></i>
+              <i class="listI"><img src="images/two/tab.png" alt=""></i>
+            </div>
+          </form>
+        </div>
+        <ul id="list"><!-- 列表 --></ul>
+        <div id="map"><!-- 地图 --></div>
+      </div>
+      <!-- 实时报警 -->
+      <div class="realAlarm">
+        <h2>实时报警</h2>
+        <table id="tableAlarm" lay-filter="tableAlarm"></table>
+      </div>
+    </div>
+    <div class="right">
+      <!-- 导航 -->
+      <div class="nav">
+        <ul class="adminNav hide">
+          <li class="li1 active" data-src="myIndex">总览</li>
+          <li class="li2 willHide" data-src="back2_company">公司<br>信息</li>
+          <li class="li3" data-src="back8_0_FaultGround">报警<br>信息</li>
+          <li class="li4" data-src="back9_1_DailyMasterInfo">日常<br>监测</li>
+          <li class="li5">总览</li><!-- 选中时的文字 -->
+          <li class="li6" data-src="back10_1_statisticsMater">统计<br>信息</li>
+          <li class="li7 willHide" data-src="back7_feedBack">意见<br>反馈</li>
+          <li class="li8 willHide" data-src="back12_version">版本<br>管理</li>
+          <li class="li9 willHide" data-src="back1_manager">管理<br>员</li>
+        </ul>
+        <ul class="normalNav hide">
+          <li class="li2" data-src="back2_company">公司信息</li>
+          <li class="li3" data-src="back8_0_FaultGround">报警信息</li>
+          <li class="li4" data-src="back9_1_DailyMasterInfo">日常监测</li>  
+          <li class="li6" data-src="back10_1_statisticsMater">统计信息</li>        
+        </ul>
+      </div>
+      <!-- 设备状态 -->
+      <div class="state">
+        <h2>设备状态</h2>
+        <ul>
+          <li class="zsb"> <span class="sumCount">0</span> <p>总设备</p> </li>
+          <li class="znwgzx"> <span class="zhiNengWangGuanIsOnline">0</span> <p>智能网关在线</p> </li>
+          <li class="znwglx"> <span class="zhiNengWangGuanNotOnline">0</span> <p>智能网关离线</p> </li>
+          <li class="jcsbzx"> <span class="jianCeDeviceIsOnline">0</span> <p>监测设备在线</p> </li>
+          <li class="jcsblx"> <span class="jianCeDeviceNotOnline">0</span> <p>监测设备离线</p> </li>
+        </ul>
+      </div>
+      <!-- 设备状态详情 -->
+      <div class="detail">
+        <h2>设备状态详情</h2>
+        <table id="tableDetail" lay-filter="tableDetail"></table>
+      </div>
+    </div>
+  </div>
+  <div class="myIndexzhuye"></div>
+</body>
+</html>
+<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+<script src="js/layui/layui.js?v=1.6.22"></script>
+<script src='http://webapi.amap.com/maps?v=1.4.6&key=f3f3b6e0a17a3e1763524febfeab1ad4'></script>
+<script src="js/common.js?v=1.6.22"></script>
+<script src="js/pagejs/myIndex.js?v=1.6.22"></script>
+<script type="text/html" id="timeTpl">
+  {{# if(d.times!=''){ }}
+    {{d.times.slice(0,-4)}}
+  {{# }else{ }}
+    {{d.times}}
+  {{# } }}
+</script>
+<script type="text/html" id="timesTpl">
+  {{# if(d.offlineTime!=''){ }}
+    {{d.offlineTime.slice(0,-4)}}
+  {{# }else{ }}
+    {{d.offlineTime}}
+  {{# } }}
+</script>

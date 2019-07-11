@@ -1,0 +1,125 @@
+{
+  "code": "0",
+  "msg": "成功",
+  "data": {
+    "allCountByFaultType": [{
+      "cnt": 2,
+      "fault_type": 11
+    }],
+    "maxValueTemper": [{
+        "positionName": "安_4号母线4-2支下静触头B相",
+        "temper": 1372,
+        "postion": "13",
+        "sensorId": "A16"
+      },
+      {
+        "positionName": "安_4号母线4-2支上动触头A相",
+        "temper": 1371,
+        "postion": "3",
+        "sensorId": "A17"
+      },
+      {
+        "positionName": "ahxj-masterNo1ahxj_bramchNo2母排A相",
+        "temper": 1369,
+        "postion": "0",
+        "sensorId": "A19"
+      },
+      {
+        "positionName": "安_4号母线4-1支母排A相",
+        "temper": 1611,
+        "postion": "0",
+        "sensorId": "A21"
+      }
+    ],
+    "maxValueVoltage": [{
+        "temper_c": 1321,
+        "temper_b": 1321,
+        "temper_a": 1321,
+        "pointName": "2号母线1号支线1号监测点",
+        "electric": 8801,
+        "humidity_a": 97,
+        "humidity_c": 97,
+        "humidity_b": 97,
+        "sensorId": "B27"
+      },
+      {
+        "temper_c": 1309,
+        "temper_b": 1309,
+        "temper_a": 1309,
+        "pointName": "1号母线1号支线1号监测点",
+        "electric": 8789,
+        "humidity_a": 93,
+        "humidity_c": 93,
+        "humidity_b": 93,
+        "sensorId": "B43"
+      }
+    ],
+    "maxValueEric": [{
+        "devid": "00000000000000002017",
+        "Power_Apparent_b": 127.908,
+        "voltage_a": 118.284,
+        "Power_Apparent_c": 546.695,
+        "voltage_b": 120.054,
+        "voltage_c": 100.199,
+        "Power_Apparent_a": 130.042,
+        "Electric_a": 1.52256,
+        "Power_Use_b": 110.594,
+        "Power_Use_c": 500.453,
+        "Power_Nouse_b": 64.261,
+        "Power_Nouse_a": 62.9877,
+        "Power_Factor_b": 1,
+        "Power_Factor_c": 1,
+        "Power_Nouse_c": 230.18,
+        "Electric_c": 9.51043,
+        "Electric_b": 2.01148,
+        "Power_Use_a": 113.77,
+        "Power_Factor_a": 1,
+        "masterName": "安_2号母线"
+      },
+      {
+        "devid": "00000000000000002018",
+        "Power_Apparent_b": 59.1527,
+        "voltage_a": 58.8989,
+        "Power_Apparent_c": 59.4738,
+        "voltage_b": 59.062,
+        "voltage_c": 59.2133,
+        "Power_Apparent_a": 58.8555,
+        "Electric_a": 0.999263,
+        "Power_Use_b": 51.0787,
+        "Power_Use_c": 51.5487,
+        "Power_Nouse_b": 29.8331,
+        "Power_Nouse_a": 29.4626,
+        "Power_Factor_b": 1,
+        "Power_Factor_c": 1,
+        "Power_Nouse_c": 29.6625,
+        "Electric_c": 1.0044,
+        "Electric_b": 1.00154,
+        "Power_Use_a": 50.9503,
+        "Power_Factor_a": 1,
+        "masterName": "安_1号母线"
+      },
+      {
+        "devid": "00000000000000002019",
+        "Power_Apparent_b": 59.2523,
+        "voltage_a": 580.562,
+        "Power_Apparent_c": 59.4182,
+        "voltage_b": 59.1137,
+        "voltage_c": 59.2059,
+        "Power_Apparent_a": 58.8092,
+        "Electric_a": 0.998854,
+        "Power_Use_b": 51.2151,
+        "Power_Use_c": 51.5907,
+        "Power_Nouse_b": 29.7968,
+        "Power_Nouse_a": 29.533,
+        "Power_Factor_b": 1,
+        "Power_Factor_c": 1,
+        "Power_Nouse_c": 29.4774,
+        "Electric_c": 1.00359,
+        "Electric_b": 1.00234,
+        "Power_Use_a": 50.8559,
+        "Power_Factor_a": 1,
+        "masterName": "安_3号母线"
+      }
+    ]
+  }
+}

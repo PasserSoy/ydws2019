@@ -1,0 +1,168 @@
+@charset "utf-8";
+body,html {
+    background-color: #ecf1f5;
+}
+.myPage {
+    /* padding-right: 50px;
+    margin-left: 30%; */
+    font-size: 15px;
+    text-align: center;
+}
+
+.table_menu_list {
+    width: 100% !important;
+}
+
+.table thead tr th {
+    border-color: #DDD;
+    font-weight: bold;
+}
+ul {
+    list-style: none;
+    /* 去掉ul前面的符号 */
+    margin: 0px;
+    /* 与外界元素的距离为0 */
+    padding: 0px;
+    /* 与内部元素的距离为0 */
+    width: auto;
+    /* 宽度根据元素内容调整 */
+}
+
+ul li {
+    float: left;
+    /* 向左漂移，将竖排变为横排 */
+    padding: 6px 0;
+}
+
+a:hover {
+    background-color: #bfcbd6;
+    /* 背景色 */
+    color: #465c71;
+    /* 文字颜色 */
+    text-decoration: none;
+    /* 不显示超链接下划线 */
+}
+
+.change_Pass_style label {
+    /*font-size: 12px;*/
+    /* font-weight: 700; */
+}
+
+.table_menu_list th {
+    background-color: #a1a1a1;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#Member_Ratings thead tr th {
+    background: #2494f9;
+    background-color: #c3dde7;
+    color: #333;
+    padding: 3px 0;
+}
+
+.redOrange {
+    background: #2494f9;
+}
+
+.blueBlack {
+    background: #454545;
+    background-color: #54d0e2;
+    color: #fff;
+}
+.blueBlack:hover {
+    background-color: #54d0e2;
+}
+.l_f {/*按钮*/
+    float: right;
+    margin-right: 30px;
+    margin-right: 3vw;
+}
+
+.layui-layer-min,
+.layui-layer-setwin,
+.layui-layer-title {
+    background: #2494f9 !important;
+}
+
+.layui-layer-setwin {
+    width: 22px !important;
+    height: 22px;
+    right: 30px !important;
+    top: 13px !important;
+    font-size: 0px !important;
+    border: solid 2px white !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+.layui-layer-setwin .layui-layer-close1 {
+    background-position: -187px -38px !important;
+    cursor: pointer;
+    width: 15px !important;
+    height: 15px !important;
+    margin: 1px !important;
+}
+
+.layui-layer-setwin>a {
+    margin-left: 0px;
+}
+
+.layui-layer-btn1,
+.layui-layer-btn0 {
+    background: #2494f9 !important;
+    border: solid 1px #2494f9 !important;
+    color: white !important;
+}
+
+.layui-layer-content {
+    text-align: center !important;
+}
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #bcd9f1;
+}
+.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td {
+    padding: 3px;
+    border-color: #fff;
+}
+/*loadjy*/
+.loadjy { position: relative; z-index: -99; opacity: 0; }
+.loadjy.op { opacity: 1; z-index: 99; }
+.loadjy::before { content: ''; position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 8; background-color: rgba(0, 0, 0, 0.3);background-color: transparent; }
+.loadjy div { position: fixed; z-index: 9; left: 0; top: 230px; right: 0; width: 165px; height: 60px; margin: auto; display: flex; align-items: center; justify-content: center; transition: all .3s linear; background-color: #fff; border-radius: 5px; border: 1px solid #ddd;box-shadow: 0 0 3px #333; }
+.loadjy div::after { content: '请求数据中请稍后...'; font-size: 12px; padding-right: 10px; white-space: nowrap; }
+.loadjy span { margin: auto; display: flex; animation: rot 5s linear infinite; }
+.loadjy i { width: 6px; height: 6px; border-radius: 50%; margin: 0 4px; }
+.loadjy i:nth-of-type(1) {background-color: black;}
+.loadjy i:nth-of-type(2) {background-color: #9100ff;}
+.loadjy i:nth-of-type(3) {background-color: #30a1f1;}
+@keyframes rot {
+    100% {transform: rotate(-1080deg);}
+}
+/*没有数据*/
+#noTableData { height:230px; text-align: center; display: none; margin: auto;position: fixed; z-index: 97; top: 100px; left: 0; right: 0; }
+#noTableData p {font-size: 24px; color: #b2afaa;}
+/*跳转*/
+.ljypage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.ljypage input {
+	margin: 0 5px;
+}
+.jumpint {
+	width: 40px;
+	height: 26px;
+}
+.jumpsure {
+	padding: 3px;
+	font-size: 12px;
+}
+#pagechange {
+	height: 27px;
+	line-height: 27px;
+	margin-left: 5px;
+	padding: 0;
+}

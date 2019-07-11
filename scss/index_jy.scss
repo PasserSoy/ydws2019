@@ -1,0 +1,160 @@
+// 导航栏
+.info {
+  position: relative;
+  height: 90px;
+  background: linear-gradient(to right,#2492f6,#39aeec,#53cee0);
+  background: url('../images/index/back.png') no-repeat;
+  background-size: 100% 100%;
+  .info_all {
+    width: auto;
+    display: flex;
+    .info_r {// 用户名
+      position: absolute;
+      left: 30px;
+      left: 3vw;
+      top: 0;
+      width: auto;
+      float: none;
+      .img_info {
+        width: auto;
+        float: none;
+      }
+      span {
+        display: inline;
+        padding: 0 3px;
+        font-size: 13px;
+      }
+      div {
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+    .guzhang {// 修改密码、退出
+      position: absolute;
+      right: 30px;
+      right: 3vw;
+      top: 0;
+      width: auto;
+      background-color: transparent;
+      height: 40px;
+      line-height: 40px;
+      a {
+        color: #3090b3;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 2px 0;
+        padding-left: 21px;
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 1px;
+          width: 16px;
+          height: 16px;
+          background: url('../images/index/index.png') 0 0 no-repeat;
+        }
+        &#Exit_system {// 退出
+          margin-left: 20px;
+          &::before {
+            background-position: 0 -18px;
+          }
+        }
+      }
+    }
+    .info_l {// logo
+      margin: 20px auto 0;
+      font-size: 24px;
+      font-weight: 500;
+      text-shadow: 1px 3px 3px #333;
+      font-family: 'microsoft yahei';
+    }
+  }
+}
+// 菜单
+.nav {
+  overflow: hidden;
+}
+.two_header {
+  height: auto;
+  ul {
+    height: auto;
+    .active {
+      border-bottom: 0;
+      background-color: #2494f9;
+      a:focus {
+        text-decoration: none;
+      }
+      label {
+        color: #fff;
+      }
+    }
+    label {
+      margin-bottom: 0;
+      padding: 6px 0;
+      font-weight: normal;
+      color: #333;
+    }
+  }
+  .public {
+    img {
+      display: none;
+    }
+  }
+}
+// myIndex 头部样式
+.myIndex {
+  $back:#0c141f;
+  // min-width: 1900px !important;
+  background-color: $back;
+  .nav {
+    background-color: $back;
+    #iframepage {
+      position: relative;
+      // min-width: 1900px !important;
+      // min-height: 860px !important;
+    }
+  }
+  .info {
+    margin-bottom: -20px;
+    height: 75px;
+    background: linear-gradient(to right,#2492f6,#39aeec,#53cee0);
+    background: url('../images/index/back-1.png') no-repeat;
+    background-size: 100% 100%;
+    .info_l {
+      font-size: 1.6vw;
+    }
+  }
+  .two_header {
+    display: none;
+  }
+}
+// echart
+.echartList {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 90px;
+  z-index: 9999;
+  background-color: #3678b5;
+  .echartData {
+    // display: none;
+    padding: 5px;
+  }
+  &>div {
+    position: static !important;
+    * { color: #fff; font-size: 12px; font-style: normal }
+    span { display: inline-block; margin-right: 5px; border-radius: 10px; width: 10px; height: 10px }
+    p {
+      margin-bottom: 3px;
+    }
+    .tit {
+      font-size: 14px;
+    }
+    .date {
+      margin-bottom: 3px;
+    }
+    i { margin-right: 3px }
+  }
+}
+

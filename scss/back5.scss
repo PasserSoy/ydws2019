@@ -1,0 +1,55 @@
+/* 实时预览 */
+.live-preview {
+  background-color: #525252;
+  padding: 0 10px;
+  margin: 15px 0;
+  overflow: auto;
+  text-align: center;
+  user-select: none;
+  height: 280px;
+  overflow-y: hidden;
+  * {
+    background-color: transparent;
+  }
+  .momline {
+    margin-right: 0;
+    &>h3 {
+      text-align: left;
+      color: #fff;
+      font-size: 14px;
+      .linep {
+        height: 6px;
+      }
+    }
+  }
+  // 覆盖的样式
+  .config {
+    justify-content: center;
+    li {
+      padding: 0;
+    }
+    .table {
+      margin-left: -15px;
+    }
+  }
+  .config .equip .relay li {
+    background-color: transparent;
+  }
+  .configname {
+    text-align: center;
+    padding: 1px 5px;
+    border: 1px solid #fff;
+    color: #fff;
+    margin-bottom: 5px;
+    background-color: #2494f9;
+  }
+  .config .pt .table {
+    background-color: transparent;
+    margin-left: -60px;
+  }
+  .config .equip {
+    // height: 300px;
+    transform-origin: top;
+    transform: scale(.7);
+  }
+}

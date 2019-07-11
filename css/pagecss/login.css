@@ -1,0 +1,68 @@
+* { font-family: "微软雅黑"; }
+.back {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  background: url('../../images/index/login-back.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+#main {
+  width: 420px;
+  height: 430px;
+  margin: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  text-align: center;
+}
+.login-panel {
+  border-radius: 2px;
+  padding: 70px 0 90px;
+  background-color: rgba(255, 255, 255, 0.28);
+}
+h1 {
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+input {
+  height: 48px;
+  width: 340px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  color: #333;
+}
+input:-webkit-autofill {
+  box-shadow: 0 0 0 400px #fff inset;
+}
+.submit_btns {
+  background-color: #2494f9;
+  color: #fff;
+  width: 382px;
+  height: 50px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+}
+.submit_btns:hover {opacity: .8;}
+.forgetpw {
+  color: #fff;
+  float: left;
+  margin: 20px;
+  font-size: 13px;
+}
+.forgetpw:hover {
+  color: #fff;
+  text-decoration: underline;
+}

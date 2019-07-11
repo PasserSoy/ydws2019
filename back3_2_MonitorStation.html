@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/style.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/codemirror.css?v=1.6.22">
+	<link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="font/css/font-awesome.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/MonitorStation.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+	<title>监测站列表</title>
+	<style type="text/css">
+		body { margin: auto; }
+		* { font-family: Arial, "微软雅黑"; }
+		.tab_class_, #Member_Ratings { background: #ecf1f5; }
+		.tab_class_ {margin-top: 18px;margin-left: 3px;}
+		.data_show { height: 180px; background: white; text-align: center; border-top: solid 20px #ecf1f5; border-bottom: solid 20px #ecf1f5; }
+		.page_btn { border-radius: 3px; border: none; color: white; padding: 0 10px; }
+		.btn_search { border-radius: 0 3px 3px 0; background: #2494f9; border: none; color: white; padding: 0 10px; }
+		.btn_search { width: 80px; height: 30px; line-height: 30px; }
+		.info_size { font-family: 'Arial Normal', 'Arial'; font-weight: 400; font-style: normal; font-size: 13px; color: #333333; text-align: left; line-height: normal; }
+		.table thead tr th { border-color: #DDD !important; font-weight: bold; }
+		#btn-1, #btn-2, #monitorStation_add { width: 60px; height: 30px; line-height: 30px; background: #454545 !important; border-radius: 3px; }
+		#monitorStation_add { width: 100px; transform: translateY(-2px); margin-right: 10px; }
+		#title .active { background: #2494f9 !important; }
+		.back:hover, .back { display: inline-block; width: 60px; height: 30px; line-height: 30px; text-align: center; background: #2494f9; color: white !important; border-radius: 3px; margin-right: 20px; }
+		th { color: white; }
+		.layui-layer-setwin { display: none !important; }
+		.layui-layer-content { height: auto !important; }
+		.data_show, #Member_Ratings { display: none; }		
+		.amap-sug-result { z-index: 99999 !important; }
+		body .layui-layer-molv-msg { min-width: 100px; background-color: #000; filter: alpha(opacity=60); background-color: rgba(0,0,0,.6); color: #fff; border: none;}
+		body .layui-layer-molv-msg .layui-layer-setwin {display: none;}
+	</style>
+</head>
+<body>
+	<div class="loadjy">
+		<div><span><i></i><i></i><i></i></span></div>
+	</div>
+	<div id="noTableData"> <img src="./images/two/7.1.png" alt="无数据">
+		<p>抱歉，没有数据啊...</p>
+	</div>
+	<div class="page-content clearfix">
+		<div class="tab_class_">
+			<ul class="navigation_l">
+				<li class="title" id="first_li" class="breadadd">
+					<a class="back" id='back_to_company' href="javascript:;">
+						< 返回</a> </li> <li class="title companyHide">
+							<a href="back2_company.html?v=1.6.22">所有公司</a>
+							<span>></span>
+				</li>
+				<li class="title">
+					<a href="javascript:void(0);" data-bread="company">-</a>
+				</li>
+			</ul>
+
+			<ul class="navigation_r">
+				<li class="title" id="title" style="margin: 0px;padding: 6px;">
+					<label id="btn-1" class="active">监测站</label>
+					<label id="btn-2">巡检员</label>
+				</li>
+				<li class="title">
+					<a href="javascript:;" id="monitorStation_add" class="layui-btn layui-btn-xs layui-bg-green">添加监测站</a>
+					<!--<a href="javascript:;" id="member_add" class="layui-btn layui-btn-xs layui-bg-green"><i class="icon-plus"></i>添加巡检员</a>-->
+				</li>
+				<li>
+					<input placeholder="请输入监测站搜索" style="width: 130px;padding-left: 8px;height: 30px;border: 1px solid #81ba44;border-radius: 3px 0 0 3px"
+					 id="stationName_find" />
+					<button type="button" class="btn_search" style="height: 30px; line-height: 30px;width: 35px;background-color: #81ba44; transform: translateX(-6px);">
+						<i class="icon-search"></i>
+					</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="data_show">
+			<div style="width: 300px;height: 30px; line-height:30px;display: inline-block; float:left; margin-top: 50px;margin-left: 155px; background: white;">
+				<span id="companyName" class="info_size" style="display: inline-block;color: gray; background: white; font-size:20px; font-weight:bold;"></span>
+				<!--安徽徽远成电气科技股份有限公司-->
+			</div>
+			<div style="display: inline-block; width: 120px;height: 120px; text-align: center; margin: 10px 60px; transform: translateX(-200px); background: white; border: solid 2px green; border-radius: 50%;margin-left: 300px;">
+				<div id="stationCount" style="width: 50px;height: 20px;position: absolute; top:30px;left:35px; background: white; color:green;">0</div>
+				<div style="width: 70px;height: 20px;position: absolute;top:60px;left:25px; background: white; color:green;">监测站总数</div>
+			</div>
+		</div>
+
+		<div id="Member_Ratings">
+			<div class="d_Confirm_Order_style">
+				<div class="">
+					<table class="table table-striped table-bordered table-hover" id="sample-table" data-name="监测站">
+						<thead>
+							<tr>
+								<th width="25">序号</th>
+								<th width="80">监测站名称 </th>
+								<th width="80">所在地区</th>
+								<th width="150">经纬度</th>
+								<th width="80">母线数</th>
+								<th width="80">所有支线数</th>
+								<th width="90">所有监测设备</th>
+								<th width="70">建站时间</th>
+								<th width="150">操作</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+						</tbody>
+					</table>
+
+					<div class="myPage" id="footer">
+						<div class="ui_frt ljypage">
+							<input type="button" value="< 上一页" class="ui_input_btn01 page_btn beforPage" rel="prev" /> 共
+							<span class="ui_txt_bold04 numtotal">1</span>页&nbsp;&nbsp;&nbsp; 当前第
+							<span class="ui_txt_bold04 nowpage">1</span>页 共
+							<span class="ui_txt_bold04 numtotalpp">0</span>条&nbsp;&nbsp;&nbsp;
+							<input type="button" value="下一页 >" class="ui_input_btn01 page_btn laterPage" rel="after" />
+							<input type="text" class="jumpint"> <button class="jumpsure">跳转</button>
+							<select id="pagechange">
+								<option value="10">10条/页</option>
+								<option value="15">15条/页</option>
+								<option value="20">20条/页</option>
+								<option value="25">25条/页</option>
+								<option value="30">30条/页</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="change_Pass_style" id="add_monitorStation_style" style="display:none">
+		<ul style="margin: 10px 25px;">
+			<li><label class="label_name">监测站名称：</label><span class="add_name"><input style="width: 200px;;margin: 0px;"
+					 placeholder="请输入监测站名称" id="stationName" name="公司名称" type="text" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li><label class="label_name">所&nbsp;在&nbsp;地&nbsp;区&nbsp;：</label><span class="add_name"><input style="width: 200px;;margin: 0px;"
+					 placeholder="请输入所在地区" id="stationAddress" name="公司名称简称" type="text" class="text_add" /></span>
+				<div class="prompt r_f"></div>
+			</li>
+			<li><label class="label_name">经&nbsp;&nbsp;&nbsp;纬&nbsp;&nbsp;&nbsp;度&nbsp;：</label>
+				<span class="add_name">
+					<input placeholder="输入经纬度用逗号隔开" style="width: 200px;;margin: 0px;" id="longitudeAndlatitude" name="经度" type="text"
+					 class="text_add" />
+				</span>
+				<div class="prompt r_f"></div>
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>
+<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+<script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+<script src="assets/layer/layer.js?v=1.6.22"></script>
+<script src="js/common.js?v=1.6.22"></script>
+<script src='http://webapi.amap.com/maps?v=1.4.6&key=f3f3b6e0a17a3e1763524febfeab1ad4&plugin=AMap.Autocomplete,AMap.Geocoder,AMap.PlaceSearch,AMap.DistrictSearch'></script>
+<!-- 选取地址坐标 -->
+<script>
+	var districtSearch  = new AMap.DistrictSearch();// 获取cityCode
+	var geocoder = new AMap.Geocoder();// 经纬度转换成citycode
+	var cityCode=0;
+	var city='';
+	$(function () {
+		var auto = new AMap.Autocomplete({
+			input: "stationAddress"
+		});// 自动识别
+		auto.on('select', function (res) {// 下拉选择地址
+			var lng = res.poi.location.lng,
+				  lat = res.poi.location.lat;
+			// districtSearch .search(res.poi.adcode, function (status, result) {
+			// 	cityCode = result.districtList[0].citycode;
+			// 	$('#cityCode').val(cityCode);
+			// });
+			if (lng && lat) {
+				$('#longitudeAndlatitude').val(`${lng},${lat}`);
+			} else {// 返回无经纬度
+				$('#longitudeAndlatitude').val('');
+			}
+		});
+		auto.on('complete',function(res){
+			if(res.info == 'NO_DATA'){// 查询无数据时
+				$('#longitudeAndlatitude').val('');
+			};
+		});
+	})
+</script>
+<script src="js/pagejs/back3-2.js?v=1.6.22"></script>

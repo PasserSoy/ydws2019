@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/echarts4.min.js"></script>
+</head>
+<body>
+
+<div id="chartOne" style="width: 500px;height: 600px">
+
+</div>
+
+</body>
+</html>
+<script>
+    var myChart = echarts.init(document.getElementById('chartOne'));
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: false, readOnly: false},
+                magicType: {show: false, type: ['line', 'bar']},
+                restore: {show: false},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data:['分数','产业平均分']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['北京','昆明','重庆','贵阳','长沙','滨湖','宁波','罗源','北城','闽江']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '分数',
+                min: 0,
+                max: 100,
+                interval: 20,
+                axisLabel: {
+                    formatter: '{value} 分'
+                }
+            },
+            {
+                type: 'value',
+                name: '平均分数',
+                min: 0,
+                max: 100,
+                interval: 20,
+                axisLabel: {
+                    formatter: '{value} 分'
+                }
+            }
+        ],
+        series: [
+            {
+                name:'分数',
+                type:'bar',
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = [
+                                '#5e7e54','#e44f2f','#81b6b2','#eba422','#5e7e54',
+                                '#e44f2f','#81b6b2','#eba422','#5e7e54','#e44f2f'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+
+                    }
+                },
+                data:[60, 72, 80, 75, 91, 68, 88, 95, 72, 75]
+            },
+            {
+                name:'产业平均分',
+                type:'line',
+                yAxisIndex: 1,
+                itemStyle : {
+                    normal : {
+                        color:'#58585a',
+                        lineStyle:{
+                            color:'#58585a'
+                        }
+                    }
+                },
+                data:[70, 80, 60, 50, 90, 70, 65, 70, 50, 70]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+
+</script>

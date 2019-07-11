@@ -1,0 +1,673 @@
+$shadowColor: #4890d4;
+.alarms {// 报警模块共同样式
+  $aH:30px;
+  height: $aH;
+  line-height: $aH;
+  display: flex;
+  justify-content: space-between;
+  .name {
+    position: relative;
+    padding-left: 26px;
+  }
+}
+@mixin borders($sC) {// 状态模块共同样式
+  box-shadow: 0 0 20px $sC inset;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  &>h2 {
+    $h:45px;
+    font-size: 16px;
+    font-weight: 600;
+    height: $h;
+    line-height: $h;
+    padding-left: 33px;
+    background: url('../images/index/titles.png') 9px 14px no-repeat;
+  }
+}
+#mainbody {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  // display: flex;
+  background-color: #0c141f;
+  * {
+    color: #fff;
+  }
+  &>div {
+    display: flex;
+    flex-direction: column;
+  }
+  // 左右共同样式
+  .left,.right,.middle {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    opacity: 0;
+  }
+  // 左边样式
+  .left {
+    left: 10px;
+    width: 17%;
+    min-width: 210px;
+    max-width: 327px;
+    box-shadow: 0 0 20px $shadowColor inset;;
+    border-radius: 15px;
+    padding: 10px 5px;
+    // 日期筛选
+    .dateChoose {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      padding: 8px;
+      li {
+        $liW:50px;
+        width: $liW;
+        height: $liW;
+        text-align: center;
+        line-height: $liW;
+        border: 1px solid #495565;
+        border-radius: 5px;
+        margin: 0 3px;
+        cursor: pointer;
+        &.active {// 选中状态
+          background-color: #3a5870;
+          cursor: default;
+        }
+        &:hover {
+          background-color: #3a5870;
+        }
+      }
+    }
+    // 报警
+    .highAlarm,.midAlarm {
+      flex: 4;
+      overflow: hidden;
+      position: relative;
+      h2 {/* 标题 */
+        font-size: 15px;
+        font-weight: 600;
+        @extend .alarms;
+        .count {
+          color: #3fd0cb;
+          span {
+            color: #ae3a47;
+            margin: 0 5px;
+          }
+        }
+      }
+      .content {/* 内容 */
+        overflow: auto;
+        position: absolute;
+        left: 0;
+        top: 32px;
+        right: 0;
+        bottom: 0;
+        font-size: 13px;
+        li {
+          @extend .alarms;
+          padding-right: 7px;
+          padding-left: 5px;
+          margin-bottom: 5px;
+          overflow: hidden;
+          .name {
+            color: #e9f0c6;
+          }
+          .no {
+            color: #6e8be7;
+            span {
+              color: #3fd0cb;
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+    @mixin back($y) {
+      background: url('../images/index/alarm.png') 0 $y no-repeat;
+    }
+    // 高级报警
+    .highAlarm {
+      h2 {
+        p.name {
+          @include back(2px);
+        }
+      }
+      .hgjd {/* 弧光接地 */
+        p.name {
+          @include back(-22px);
+        }
+      }
+      .jsjd {/* 金属接地 */
+        p.name {
+          @include back(-48px);
+        }
+      }
+      .gy {/* 过压 */
+        p.name {
+          @include back(-72px);
+        }
+      }
+      .qy {/* 欠压 */
+        p.name {
+          @include back(-97px);
+        }
+      }
+      .sy {/* 失压 */
+        p.name {
+          @include back(-122px);
+        }
+      }
+      .ptdx {/* PT断线 */
+        p.name {
+          @include back(-146px);
+        }
+      }
+      .gr {/* 过热 */
+        p.name {
+          @include back(-173px);
+        }
+      }
+      .sdcb {/* 湿度超标 */
+        p.name {
+          @include back(-370px);
+        }
+      }
+      .xielou {/* 泄漏 */
+        p.name {
+          @include back(-398px);
+        }
+      }
+      .gdy {/* 过电压保护器故障报警 */
+        p.name {
+          @include back(-198px);
+        }
+      }
+      .xtdl {/* 系统短路 */
+        p.name {
+          @include back(-222px);
+        }
+      }
+    }
+    // 中级报警
+    .midAlarm {
+      h2 {
+        p.name {
+          @include back(-250px);
+        }
+      }
+      .xtgdy {/* 系统过电压 */
+        p.name {
+          @include back(-276px);
+        }
+      }
+      .dlbz {/* 电量不足 */
+        p.name {
+          @include back(-323px);
+        }
+      }
+      .wd {/* 温度传感器电池电量不足 */
+        p.name {
+          @include back(-323px);
+        }
+      }
+      .gdybhq {/* 过电压保护器电池电量不足 */
+        p.name {
+          @include back(-323px);
+        }
+      }
+      .yc {/* 异常 */
+        p.name {
+          @include back(-348px);
+        }
+      }
+    }
+  }
+  // 中间样式
+  .middle {
+    .map {// 地图
+      flex: 2;
+      margin-bottom: 15px;
+      background-image: url('../images/index/map-l-t.png'),url('../images/index/map-r-t.png'),url('../images/index/map-r-b.png'),url('../images/index/map-l-b.png');
+      background-position: left top,right top,right bottom,left bottom;
+      background-repeat: no-repeat,no-repeat,no-repeat,no-repeat;
+      position: relative;
+      .filter {// 查询
+        $blueC: #009fe8;
+        position: absolute;
+        z-index: 9;
+        left: 150px;
+        right: 150px;
+        height: 52px;
+        line-height: 48px;
+        padding-left: 20px;
+        background-color: #192937;
+        .layui-input {
+          border: 1px solid $blueC;
+          background-color: transparent;
+          width: 120px;
+          &::-webkit-input-placeholder{
+            color: #fff;
+          }
+          &:focus,&:hover {
+            border-color: $blueC !important;
+          }
+        }
+        dd {
+          color: #333;
+          &:hover {
+            background-color: #98a1a9;
+          }
+        }
+        // 查询
+        .search {
+          position: relative;
+          .searchBtn {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            border-radius: 0;
+            margin-left: -2px;
+            background: $blueC url('../images/index/search-btn.png') 6px 7px no-repeat;
+          }
+        }
+        // 地图列表切换
+        .tabs {
+          $bC:#54d0e2;
+          margin-left: 40px;
+          line-height: 0;
+          border: 1px solid $bC;
+          i {
+            $w:36px;
+            display: inline-block;
+            width: $w;
+            height: $w;
+            line-height: $w;
+            text-align: center;
+            font-size: 0;
+            cursor: pointer;
+            &.active {
+              background-color: $bC;
+            }
+            &.mapI img {
+              width: 88%;
+              height: 80%;
+            }
+            &.listI{
+              position: relative;
+              img {
+                height: 54%;
+                width: 64%;
+              }
+              .list {
+                position: absolute;
+                right: 0;
+                z-index: -1;
+              }
+            }
+          }
+        }
+      }
+      #map,#list {// 地图
+        $w:10px;
+        position: absolute;
+        left: $w;
+        top: 50px;
+        right: $w;
+        bottom: $w;
+        z-index: 0;
+      }
+      #list {// 列表
+        top: 52px;
+        z-index: -9;
+        opacity: 0;
+        overflow: auto;
+        &.show {
+          z-index: 8;
+          opacity: 1;
+          background-color: #0c141f;
+        }
+        li {
+          cursor: pointer;
+          $h:40px;
+          padding: 5px;
+          border-bottom: 1px solid #192937;
+          img {
+            width: $h;
+            height: $h;
+          }
+          .img2 {
+            width: 25px;
+            height: 20px;
+            float: right;
+            margin: 10px;
+          }
+          &:hover {
+            background-color: #1a4973;
+          }
+        }
+      }
+    }
+    .realAlarm {// 实时报警
+      flex: 1;
+      background-color: #581e1e;
+      @include borders(#f00);
+      padding: 0 10px;
+      overflow: hidden;
+      h2 {margin: 0 -5px;}
+      // 表格
+      .layui-table-view {
+        margin: 0;
+        * { background-color: transparent; }
+        .layui-table-patch {background-color: transparent!important;}
+        .layui-table-init {background-color: #581e1e !important;}
+        .layui-table-header {background-color: #7d0707;}
+        tbody * {cursor: pointer!important;}
+      }
+      .layui-table-view,.layui-table-header {
+        border: 0;
+      }
+      .layui-table {
+        text-align: center;
+        th {
+          background-color: #7d0707;
+          text-align: center;
+        }
+        td {
+          border: 0;
+        }
+      }
+      .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+        background-color: #d42424;
+      }
+      .layui-table-header {
+        th:last-child {
+          border: 0;
+        }
+      }
+    }
+  }
+  // 右边样式
+  .right {
+    right: 10px;
+    min-width: 250px;
+    max-width: 365px;
+    width: 19%;
+    &>div {
+      flex: 1;
+    }
+    .nav {// 导航
+      display: flex;
+      .adminNav {
+        @mixin navs($width) {
+          width: $width;
+          height: $width;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;          
+        }
+        $w:100px;
+        $color:#23657f;
+        width: $w;
+        height: $w;
+        border: 1px solid $color;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        position: relative;
+        li:not(.li5) {
+          @include navs(57px);
+          position: absolute;
+          background: url('../images/index/nav.png') 0 0 no-repeat;
+          &.active,&:hover {
+            background-position: 0 -67px;
+            cursor: pointer;
+          }
+        }
+        // 导航定位
+        .li1 {left: 20px; top: -65px;}
+        .li2 {left: 81px; top: -39px;}
+        .li3 {left: 105px; top: 21px;}
+        .li4 {left: 21px; top: 105px;}
+        .li6 {left: -64px; top: 21px;}
+        .li7 {left: -39px; top: 80px;}
+        .li8 {left: 81px; top: 80px;}
+        .li9 {left: -39px; top: -39px;}
+        .li5 {
+          @include navs(85px);
+          border: 1px solid $color;
+          border-radius: 50%;
+          font-size: 22px;
+          color: #00aeff;
+        }
+      }
+      .normalNav {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+        li {
+          width: 34%;
+          height: 45%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border: 3px solid #5ab5b0;
+          border-radius: 8px;
+          cursor: pointer;
+          &::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: url('../images/index/nav1.png') 0 0 no-repeat;
+          }
+          &.li2::before {background-position-x: 5px;}
+          &.li3::before {background-position-x: -37px;}
+          &.li4::before {background-position-x: -79px;}
+          &.li6::before {background-position-x: -117px;}
+          &:hover {
+            background-color: #17869c;
+          }
+        }
+      }
+      .hide {
+        display: none;
+      }
+    }
+    .state {// 设备状态
+      margin: 10px 0;
+      @include borders($shadowColor);
+      padding: 0 10px;
+      h2 {margin: 0 -5px;}
+      ul {
+        flex: 1;
+        overflow: auto;
+        margin: 0 -5px 4px;
+        li {
+          display: inline-block;
+          text-align: center;
+          font-size: 12px;
+          margin: 10px 5px 0;
+          span {
+            display: block;
+            min-width: 100px;
+            font-size: 22px;
+            padding: 8px;
+            background-color: #5ab5b0;
+            border-radius: 8px;
+          }
+          p {
+            margin: 22px 0;
+          }
+        }
+      }
+    }
+    .detail {// 设备状态详情
+      @include borders($shadowColor);
+      padding: 0 10px;
+      h2 {margin: 0 -8px;}
+      .layui-table-view {
+        margin: 0;
+        border: 0;
+        * {background-color: transparent;font-size: 12px;}
+        .layui-table-patch {background-color: transparent!important;}
+        .layui-table-init {background-color: #0c141f !important;}
+        .layui-table-header {background-color: #c3dde7;border: 0;
+          th:last-child {
+            border: 0;
+          }
+        }
+        tbody * {cursor: pointer!important;}
+        .layui-table {
+          text-align: center;
+          th{
+            text-align: center;
+            div {padding: 0;}
+            span {color: #333;}
+          }
+          td {
+            border: 0;
+          }
+        }
+      }
+      .layui-table tbody tr:hover, .layui-table-click, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+        background-color: #046e9f;
+      }
+    }
+  }
+}
+.amap-container {
+  background: transparent!important;
+}
+/*loadjy*/
+.loadjy {
+  position: relative;
+  z-index: -99;
+  opacity: 0;
+  &.op {
+    opacity: 1;
+    z-index: 99;
+  }
+  &::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-color: transparent;
+  }
+  div {
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    top: 230px;
+    right: 0;
+    width: 165px;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s linear;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 3px #333;
+    &::after {
+      content: '请求数据中请稍后...';
+      font-size: 12px;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+  }
+  span {
+    margin: auto;
+    display: flex;
+    animation: rot 5s linear infinite;
+  }
+  i { width: 6px; height: 6px; border-radius: 50%; margin: 0 4px; }
+  i:nth-of-type(1) {background-color: black;}
+  i:nth-of-type(2) {background-color: #9100ff;}
+  i:nth-of-type(3) {background-color: #30a1f1;}
+}
+@keyframes rot {
+  100% {transform: rotate(-1080deg);}
+}
+// 地图统计标记
+span.maploc {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  line-height: 42px;
+  background: url('../images/index/maploc.png') 0 0 no-repeat;
+}
+//////////媒体查询
+@media screen and (max-width: 1366px) {
+  @mixin h2s {
+    $h:35px;
+    height: $h;
+    line-height: $h;
+    font-size: 13px;
+    background-position: 5px 8px;
+  }
+  #mainbody {
+    .middle {
+      .map {
+        height: 65%;
+        background-size: 10%;
+        .filter {
+          $w:6px;
+          left: $w;
+          right: $w;
+          top: $w;
+        }
+      }
+      .realAlarm {
+        height: 34%;
+        h2 {
+          @include h2s;
+        }
+      }
+    }
+    .right{
+      .nav {
+        .adminNav {
+          transform: scale(.7);
+        }
+        .normalNav {
+          li::before {
+            transform: scale(.8);
+          }
+        }
+      }
+      .state,.detail {
+        h2 {
+          @include h2s;
+        }
+      }
+      .state {
+        padding: 10px;
+        h2 {margin: 0;}
+        ul {
+          li {
+            span {
+              min-width: 92px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

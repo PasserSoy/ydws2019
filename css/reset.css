@@ -1,0 +1,18 @@
+/*
+* @Author: anchen
+* @Date:   2016-10-11 17:06:34
+* @Last Modified by:   anchen
+* @Last Modified time: 2016-10-11 16:04:25
+*/
+body {    background:url(../images/body_login_bg.jpg) 100px center repeat-x #0888d3;}
+.login_bg{ background:url(../images/login_bg.png) no-repeat; width:1000px; height:550px; margin:100px auto;}
+.login{ width:340px; margin: 0 auto; padding:208px 0 0}
+.login ul li{ margin-top:18px; width:360px; height:32px; }
+.login ul li span{ height:30px; line-height:30px; color:#75a0b9; font-size:16px; float:left; width:73px;}
+.login ul li input{ border:1px solid #aae1ff; background:#FFF; height:30px;  padding:0 5px; float:left;}
+.login ul li .input-text1{ width:263px; }
+.login ul li .input-text2{ width:185px; }
+.login ul li em {height: 22px; text-align: center; float: left; width: 60px; padding: 5px; font-size: 20px; font-weight: bold; color: #067FF9; cursor: pointer; background: #cccccc; display: inline-block;  margin-left: 7px;}
+.login a:nth-child(1){padding-left: 75px;}
+.login a:nth-child(2){padding-left: 75px;}
+.login ul li button{ border: 0; background:url(../images/login-button.png) no-repeat ;cursor: pointer; width: 273px; height: 44px; line-height: 44px; color: #beeaff; font-size: 16px;}

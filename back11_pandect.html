@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />
+	<title>总览</title>
+	<style type="text/css">
+		* { font-family: Arial, "微软雅黑"; }
+		#box { background: #ecf1f5; }
+		.icon-plus { background: #2494f9; }
+		html, body { margin: 0; }
+		.box_title { height: 60px; line-height: 60px; }
+		#map {border: solid 1px #ccc; position: fixed; left: 0; top: 60px; right: 0; bottom: 0;}
+		.icon-search { color: white; }
+		.btn_search { width: 80px; height: 30px; line-height: 30px; border-radius: 0 3px 3px 0; background: #2494f9; border: none; color: white; padding: 0 10px; outline: none; cursor: pointer; margin-right: 20px; }
+		#allList { display: none; }
+		#allList ul { margin: 0; padding: 0; margin-top: 20px; }
+		#allList ul li { list-style-type: none; height: 50px; line-height: 50px; background: white; margin-bottom: 5px; padding: 0 20px; cursor: pointer; float: none; }
+		#allList ul li img { width: 30px; height: 30px; transform: translateY(10px); }
+		#allList ul li .img2 { float: right; }
+		.active { background: #2494f9 !important; }
+		#selectArea { width: 80px; height: 32px; line-height: 32px; border-radius: 4px; background: #454545; color: white; outline: none; margin-right: 20px; padding-left: 10px; }
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div class="box_title">
+			<div style="display: inline-block; float: right;">
+				<select name="" id="selectArea" onchange="selectArea()">全部区域
+				</select>
+				<input placeholder="输入名称搜索" style="width: 130px;padding-left: 8px;height: 30px;border: 1px solid #81ba44;border-radius: 3px 0 0 3px"
+				 id="companyName_find" />
+				<button type="button" class="btn_search" style="height: 34px; line-height: 34px;width: 35px;background-color: #81ba44; transform: translateX(-6px);">
+					<i class="icon-search"></i>
+				</button>
+				<span class="span1 active" style="width:30px; height:30px; line-height: 30px; display:inline-block; background:#ccc; transform: translateY(7px); border-radius:3px 0 0 3px; cursor: pointer;">
+					<img style="width:24px; height:24px; margin-left: 3px; margin-top: 3px;" src="./images/two/position.png" alt="">
+				</span>
+				<span class="span2" style="width:30px; height:30px; line-height: 30px; display:inline-block; background:#ccc; transform: translate(-3px,5px); border-radius: 0 3px 3px 0; cursor: pointer;">
+					<img style="width:20px; height:20px; margin-left: 5px; margin-top: 5px;" src="./images/two/tab.png" alt="">
+				</span>
+			</div>
+		</div>
+		<div id="map"></div>
+		<div id="allList">
+			<ul class="allList_ul">
+
+			</ul>
+		</div>
+		<div id="noTableData">
+			<img src="./images/two/7.1.png" alt="">
+			<p>暂时没有结果</p>
+		</div>
+	</div>
+
+	<!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js?v=1.6.22"></script> -->
+	<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+	<script src='http://webapi.amap.com/maps?v=1.4.6&key=f3f3b6e0a17a3e1763524febfeab1ad4'></script>
+	<script src="js/common.js?v=1.6.22"></script>
+	<script src="js/pagejs/back11.js?v=1.6.22"></script>
+</body>
+
+</html>

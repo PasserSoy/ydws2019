@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/style.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/codemirror.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />
+	<link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+	<link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+	<title>报警信息</title>
+	<style type="text/css">
+		body { margin: auto; }
+		* { font-family: Arial, "微软雅黑"; }
+		.icon-plus, .icon-search { background: #2494f9; }
+		.btn_s, .page_btn { border-radius: 3px; border: none; color: white; padding: 0 10px; }
+		.btn_s { width: 110px; height: 30px; line-height: 30px; background: #2494f9; }
+		li { display: inline-block; width: 100%; }
+		.showData { height: 40px; text-align: center; }
+		.showData>ul li { display: inline-block;cursor: pointer; width: 70px; height: 40px; line-height: 40px; float: none; text-align: center; padding: 0; white-space: nowrap; }
+		.box { padding: 10px; background: #ecf1f5; border-bottom: solid 3px #fff; }
+		.tab { float: right; padding: 0 10px; padding-top: 25px; }
+		.tab label { min-width: 80px; padding: 0 10px; height: 30px; line-height: 30px; text-align: center; background: #454545; border-radius: 3px; color: white; cursor: pointer; }
+		.active { background: #2494f9 !important; }
+		.color_action { color: red; }
+		.div1 { width: 200px; height: 132px; background: #2494f9; float: left; margin-left: 200px; position: absolute; padding: 20px 35px; }
+		.div2 { width: 200px; height: 135px; margin-left: 430px; background: #f89663; float: left; position: absolute; padding: 20px 40px; }
+		.div3 { width: 200px; height: 135px; margin-left: 660px; background: #648e44; float: left; padding: 20px 40px; }
+		.none { display: none; }
+		body { background-color: #f9f6f1; }
+		.nullData { position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9; background: #fff; display: flex; display: none; }
+		.nullData i { font-style: normal; font-size: 12px; color: #666; letter-spacing: 1px; margin: auto; }
+		.charts {height:300px; overflow:hidden;margin-bottom: 10px;}
+		.radios label {display: inline-flex;margin-right: 6px;cursor: pointer;}
+		.radios label:hover {color: #2494f9;}
+		body .layui-layer-msg .layui-layer-setwin {display: none;}
+		.select select {width: 270px;}
+		.btn_s:hover {opacity: .8;}
+		.btn_s:disabled {background-color: #d2d2d2;}
+	</style>
+</head>
+<body>
+	<div class="loadjy">
+		<div><span><i></i><i></i><i></i></span></div>
+	</div>
+	<ul>
+		<li class="tab">
+			<label id="btn-1" class="active">母线信息</label>
+			<label id="btn-2">监测设备信息</label>
+		</li>
+	</ul>
+	<div class="select box stseries">
+		公司： <select id="company" data-id="stcompany"> </select>
+		监测站： <select id="site" data-id="stmonitorstation"></select>
+		母线： <select id="generatrix" data-id="stgeneratrix"></select>
+	</div>
+
+	<div class="box">
+		开始时间：<input id="timeStart" type="date" /> -- 结束时间：<input id="timeEnd" type="date" />
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="btn_s"><i class="icon-search"></i>立即搜索</button>
+	</div>
+
+	<div class="box" style="padding: 0;">
+		<div class="showData">
+			<ul>
+				<li id="eric">电流</li> <li>|</li>
+				<li id="eric_xiebo">电流谐波</li> <li>|</li>
+				<li id="vol">电压</li> <li>|</li>
+				<li id="vol_xiebo">电压谐波</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="box" style="width: 100%;border-bottom: 0;">
+		<div id="Statistics" style="position: relative">
+			<div id="echarts_eric" class="charts" data-id="eric"></div><!-- 电流 -->
+			<div id="I0" class="charts" data-id="eric"></div><!-- 零序电流 -->
+			<div id="echarts_eric_xieboI" data-id="eric_xiebo"><!-- 电流谐波 -->
+				<span id="select_Elec" class="radios"></span>
+				<div id="echarts_eric_xiebo" class="charts"></div>
+			</div>
+			<div id="echarts_vol" class="charts" data-id="vol"></div><!-- 电压 -->
+			<div id="U0" class="charts" data-id="vol"></div><!-- 零序电压 -->
+			<div id="echarts_vol_xieboI" data-id="vol_xiebo"><!-- 电压谐波 -->
+				<span id="select_Vol" class="radios"></span>
+				<div id="echarts_vol_xiebo" class="charts"></div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
+<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+<script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+<script src="assets/layer/layer.js?v=1.6.22" type="text/javascript"></script>
+<script src="js/echarts4.min.js?v=1.6.22"></script>
+<script src="js/common.js?v=1.6.22"></script>
+<script src="js/pagejs/back9-1.js?v=1.6.22"></script>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>排序</title>
+</head>
+<body>
+  <div id="sort">
+    <ul>
+      <li data-val="1">这是第1个li</li>
+      <li data-val="4">这是第4个li</li>
+      <li data-val="3">这是第3个li</li>
+      <li data-val="6">这是第6个li</li>
+      <li data-val="2">这是第2个li</li>
+      <li data-val="5">这是第5个li</li>bat 8-2 10-2  line-detail mytest2 privacy sort
+    </ul>
+  </div>
+<script src="js/jquery.min.js?v=1.6.22"></script>
+<script>
+  $(function(){
+    var _li = $('li').get();
+    _li.sort(function(a,b){
+      var a = $(a).data('val');
+      var b = $(b).data('val');
+      // if(a>b) return 1;
+      // if(a<b) return -1;
+      // return 0;
+      return a>b?1:-1;
+    });
+    $('ul').append(_li);
+  })
+</script>
+</body>
+</html>

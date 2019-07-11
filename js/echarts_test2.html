@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="echarts4.min.js"></script>
+</head>
+<body>
+
+<div id="chartOne" style="width: 500px;height: 600px">
+
+</div>
+
+</body>
+</html>
+<script>
+    var myChart = echarts.init(document.getElementById('chartOne'));
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: false, readOnly: false},
+                magicType: {show: false, type: [ 'bar']},
+                restore: {show: false},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data:['分数']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['北京','昆明','重庆']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '分数',
+                interval: 20,
+                axisLabel: {
+                    formatter: '{value} 分'
+                }
+            }
+        ],
+        series: [
+            {
+                name:'分数',
+                type:'bar',
+                width:20,
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = ['#5e7e54','#e44f2f','#81b6b2'];
+                            return colorList[params.dataIndex]
+                        },
+                    }
+                },
+                data:[60, 72, 80]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+
+</script>

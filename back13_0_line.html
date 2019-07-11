@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="pragma" content="no-cache"/>
+  <meta http-equiv="Cache-Control" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/style.css?v=1.6.22"/>
+  <link rel="stylesheet" href="assets/css/codemirror.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="font/css/font-awesome.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/mytest2.css?v=1.6.22">
+  <title>line</title>
+  <style>
+    body {margin: auto;}
+    *{ font-family: Arial, "微软雅黑"; }
+    #line{ box-sizing: border-box; background: #ecf1f5; }
+    .line_top, .line_center, .line_bottom { background: white; margin: 5px 0; }
+    .line_title { width: 100%; height: 50px; line-height: 50px; margin: 0; }
+    .line_top p, .line_center p{ padding: 10px; color: gray; border-bottom: solid 1px #ccc; }
+    .line_top_content{ width: 100%; height: 100px; padding: 0; display: flex; }
+    .line_bottom p{ height: 40px; line-height: 40px; color: gray; }
+    .line_bottom_electricity, .line_bottom_voltage{ width: 100%; height: 300px; }
+    .back:hover, .back { display: inline-block; width: 60px; height: 30px; line-height: 30px; text-align: center; background: #2494f9; color: white !important; border-radius: 3px; margin: 0 10px; }
+    .config .contact .tool .cable {margin-top: 0;}
+    .config .pt .ptname {padding: 0;border-bottom: 0;}
+    #line-detail {display: -webkit-flex;display: flex;}
+  </style>
+</head>
+<body style="overflow: hidden;">
+<div id="line">
+  <div class="line_title">
+    <ul class="navigation_l">
+      <li class="title" id="first_li">
+        <a href="myIndex.html?v=1.6.22" class="back">
+          < 返回</a>
+      </li>
+      <li class="title">
+        <a href="myIndex.html?v=1.6.22">总览</a>
+        <span>></span>
+      </li>
+      <li class="title">
+        <a class="stationName" href="javascript:void(0);">徐州供电公司A区</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="line_top">
+    <p class="stationName">苏州供电公司XXX区</p>
+    <ul class="line_top_content">
+      <li class="li-fault">
+        <i></i>
+        <div>
+          <span class="line-fault">0</span>
+          <span>故障总数</span>
+        </div>
+      </li>
+      <li class="li-line">
+        <i></i>
+        <div>
+          <span class="line-total">0</span>
+          <span>线路总数</span>
+        </div>
+      </li>
+      <li class="li-point">
+        <i></i>
+        <div>
+          <span class="point-total">0</span>
+          <span>监测设备总数</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="line_center">
+    <!-- <a href="back13_2_line_pointFaultInfo.html">链接跳转</a> -->
+    <p>线路详情</p>
+    <div class="myline">
+      <h3 class="tab"><span class="active" data-id="line-chart">线路图</span><span data-id="line-table">线路表</span></h3>
+      <!-- 一次接线图 -->
+      <div id="line-chart" class="line_center_content tab-child" style="position:relative;">
+        <!-- <canvas id="myCanvas" width="3000" height="300">您的浏览器暂不支持canvas,请用其他浏览器试试吧~</canvas> -->
+        <div class="loadingD">
+          <div class="loadC"></div>
+          <p>正在请求数据...</p>
+        </div>
+        <!-- 全屏显示一线图 -->
+        <span class="no-screen full-screen" title="点击全屏" alt="点击全屏"></span>
+        <h2 class="title"></h2>
+        <!-- <h2 class="title"></h2> -->
+        <div id="line-detail" class="nofull">
+          <div class="line-content">
+            <!-- <h2 class="title"></h2> -->
+            <ul class="cabinet"></ul>
+            <ul class="hide"></ul>
+          </div>
+        </div>
+      </div>
+      <!-- 接线表 -->
+      <div id="line-table" class="tab-child">
+        <!-- 监测站下有多条母线 -->
+        <h4 class="monitor-name">监测站</h4>
+        <!-- 母线集合 -->
+        <ul class="momline-collect"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="line_bottom">
+    <p>
+      母线：
+      <select name="node" id="node" style="background-color: #FCE6DA;">
+        <!--<option value="0">00000000</option>
+        <option value="1">11111111</option>
+        <option value="2">22222222</option>
+        <option value="3">33333333</option>-->
+      </select>
+    </p>
+    <!--<p>电流有效值</p>-->
+    <div id="line_bottom_electricity" class="line_bottom_electricity"></div>
+    <div id="I0" class="line_bottom_electricity"></div>
+    <!--<p>电压有效值</p>-->
+    <div  id="line_bottom_voltage" class="line_bottom_voltage"></div>
+    <div  id="U0" class="line_bottom_voltage"></div>
+  </div>
+</div>
+<!-- 全屏显示一线图 -->
+<!-- <div id="line-detail" class="full">
+	<span class="no-screen" title="退出全屏"></span>
+	<ul class="cabinet"></ul>
+	<ul class="hide"></ul>
+</div> -->
+
+<script src="assets/js/jquery.min.js?v=1.6.22"></script>
+<script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+<script src="assets/layer/layer.js?v=1.6.22"></script>
+<script src="assets/layui/layui.all.js?v=1.6.22"></script>
+<script src="assets/js/html5shiv.js?v=1.6.22"></script>
+<script src="js/echarts4.min.js?v=1.6.22"></script>
+<script src="js/common.js?v=1.6.22"></script>
+<script src="js/pagejs/back13line.js?v=1.6.22"></script>
+<script src="js/pagejs/back13.js?v=1.6.22"></script>
+</body>
+</html>

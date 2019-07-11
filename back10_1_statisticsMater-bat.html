@@ -1,0 +1,1096 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="assets/css/bootstrap.min.css?v=1.6.22" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=1.6.22"/>
+    <link href="assets/css/codemirror.css?v=1.6.22" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />
+    <link rel="stylesheet" href="font/css/font-awesome.min.css?v=1.6.22" />
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css?v=1.6.22" />
+    <script src="assets/js/jquery.min.js?v=1.6.22"></script>
+    <link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />
+    <link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+    <link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+    <link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+    <script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+    <script src="assets/layer/layer.js?v=1.6.22" type="text/javascript" ></script>
+    <script src="js/echarts4.min.js?v=1.6.22"></script>
+    <title>报警信息</title>
+    <style type="text/css">
+        /* html{
+            background: #f9f6f1;
+        } */
+        body {/* width: 1000px; */margin: auto;}
+        *{
+            font-family: Arial, "微软雅黑";
+        }
+        .icon-plus,
+        .icon-search {
+            background: #2494f9;
+        }
+        .btn_search,
+        .page_btn {
+            border-radius: 3px;
+            /* background: #2494f9; */
+            border: none;
+            color: white;
+            padding: 0 10px;
+        }
+        .btn_search {
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+        }
+        li{
+            display: inline-block;
+            width: 100%;
+        }
+        .showData > ul li {
+            display: inline-block;
+            width: 70px;
+            height: 40px;
+            line-height: 40px;
+            float: left;
+            text-align: center;
+            padding: 0;
+            white-space: nowrap;
+        }
+        .box_min_max_data ul {
+            list-style:none;
+            margin: -3px 300px;
+            height: 70px;
+        }
+        .box_min_max_data ul li {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            float: left;
+            text-align: center;
+            width: 20%;
+            padding: 0;
+        }
+        .box_min_max_data {min-height: 190px;}
+        .div1{
+            width: 200px;
+            height: 132px;
+            background: #2494f9;
+            float: left;
+            margin-left: 290px;
+            position: absolute;
+            padding: 20px 35px;
+        }
+        .div2{
+            width: 200px;
+            height: 135px;
+            margin-left: 530px;
+            background: #f89663;
+            float: left;
+            position: absolute;
+            padding: 20px 40px;
+        }
+        .div3{
+            width: 200px;
+            height: 135px;
+            margin-left: 660px;
+            background: #648e44;
+            float: left;
+            padding: 20px 40px;
+        }
+        tr,dd{
+            line-height: 20px;
+        }
+        .color_action{
+            color: red;
+        }
+
+        .box {
+            padding: 10px;
+            background: white;
+            border-top: solid 5px #f9f6f1;
+            border-bottom: solid 5px #f9f6f1;
+        }
+
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+
+        input[type="radio"]:nth-of-type(21),
+        input[type="radio"]:first-of-type {
+            margin: 0;
+        }
+
+        .tab {
+            float: left;
+            padding: 6px 10px;
+            padding-top: 25px;
+        }
+        .tab label {
+            min-width: 80px;
+            padding: 0 10px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #454545;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+        }
+        .active {
+            background: #2494f9 !important;
+        }
+
+        .div1{
+            width: 200px;
+            height: 132px;
+            background: #2494f9;
+            float: left;
+            margin-left: 200px;
+            position: absolute;
+            padding: 20px 35px;
+        }
+        .div2{
+            width: 200px;
+            height: 135px;
+            margin-left: 430px;
+            background: #f89663;
+            float: left;
+            position: absolute;
+            padding: 20px 40px;
+        }
+        .div3{
+            width: 200px;
+            height: 135px;
+            margin-left: 660px;
+            background: #648e44;
+            float: left;
+            padding: 20px 40px;
+        }
+
+        .none{
+            display: none;
+        }
+        body {background-color: #f9f6f1;}
+        .nullData {position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9; background: #fff;display: flex;display: none;}
+        .nullData i {font-style: normal;font-size: 12px; color: #666; letter-spacing: 1px;margin: auto;}
+    </style>
+</head>
+<body >
+
+
+<ul>
+    <li class="tab">
+        <label id="btn-1" class="active">母线信息</label>
+        <label id="btn-2" >监测设备信息</label>
+    </li>
+</ul>
+
+<div class="box">
+    开始时间：<input id="timeStart" type="date" />  --  结束时间：<input id="timeEnd" type="date" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn_search"><i class="icon-search"></i>立即搜索</button>
+</div>
+
+    <div class="select" style="width: 100%; padding: 10px 5px;">
+        <!-- 三级联动 -->
+        公司：
+        <select style="width: 200px;" id="company"></select>
+        站点：
+        <select style="width: 150px;" id="site"></select>
+        母线：
+        <select style="width: 150px;" id="generatrix"></select>
+    </div>
+
+
+<div class="box" style="padding: 0;">
+    <div class="showData" style="height: 40px;margin: auto 230px;">
+        <ul>
+            <li id="eric" style="cursor: pointer;">电流</li>
+            <li>|</li>
+            <li id="eric_xiebo" style="cursor: pointer;">电流谐波</li>
+            <li>|</li>
+            <li id="vol" style="cursor: pointer;">电压</li>
+            <li>|</li>
+            <li id="vol_xiebo" style="cursor: pointer;">电压谐波</li>
+        </ul>
+    </div>
+</div>
+
+<div class="box" style="width: 100%;">
+    <div id="Statistics" style="position: relative">
+        <div id="echarts_eric" style="height:300px; overflow:hidden;position: relative;" ></div>
+        <div id="echarts_eric_xieboI">
+            <span id="select_Elec"></span>
+            <div id="echarts_eric_xiebo" style="height:300px; overflow:hidden;position: relative;" ></div>
+        </div>
+
+        <div id="echarts_vol" style="height:300px; overflow:hidden;position: relative;" ></div>
+
+        <div id="echarts_vol_xieboI">
+            <span id="select_Vol"></span>
+            <div id="echarts_vol_xiebo" style="height:300px; overflow:hidden;position: relative;" ></div>
+        </div>
+    </div>
+</div>
+
+    <div class="box_min_max_data">
+         <div style="width: 100%;height: 40px; /*background-color: #00C1B3*/">
+                <ul>
+                    <li id="max" style="cursor: pointer;">最大值</li>
+                    <li>|</li>
+                    <li id="min" style="cursor: pointer;">最小值</li>
+                    <li>|</li>
+                    <li id="average" style="cursor: pointer;">平均值</li>
+                </ul>
+         </div>
+            <div id="min_max_data" style="padding: 0 85px;">
+                    <!-- <div class="div1">
+                         <tr>平均温度</tr>
+                         <dd><label>A相：</label><label>平均温度</label></dd>
+                         <dd><label>B相：</label><label>平均温度</label></dd>
+                         <dd><label>C相：</label><label>平均温度</label></dd>
+                     </div>
+                    <div class="div2">
+                        <tr>平均温度</tr>
+                        <dd><label>A相：</label><label>平均温度</label></dd>
+                        <dd><label>B相：</label><label>平均温度</label></dd>
+                        <dd><label>C相：</label><label>平均温度</label></dd>
+                     </div>
+                     <div class="div3">
+                         <tr>平均温度</tr>
+                         <dd><label>A相：</label><label>平均温度</label></dd>
+                         <dd><label>B相：</label><label>平均温度</label></dd>
+                         <dd><label>C相：</label><label>平均温度</label></dd>
+                     </div>-->
+              </div>
+    </div>
+
+
+<!-- </div> -->
+
+
+</body>
+</html>
+<script src="js/common.js?v=1.6.22"></script>
+<script>
+    // 默认点击第一个
+    sessionStorage.tabID = 'eric';
+    // 波形图初始化
+    var echarts_eric = echarts.init(document.getElementById('echarts_eric'));
+    var echarts_eric_xiebo = echarts.init(document.getElementById('echarts_eric_xiebo'));
+    var echarts_vol = echarts.init(document.getElementById('echarts_vol'));
+    var echarts_vol_xiebo = echarts.init(document.getElementById('echarts_vol_xiebo'));
+
+    var nullDataDom = '<p class="nullData"><i>查询数据为空...</i></p>';/*查询数据为空时的dom结构*/
+    $('#btn-2').on('click', function(){
+        window.parent.$("#iframepage").attr("src",'back10_2_statisticsPoint.html?v=1.6.22');
+    })
+
+    var indexTimes = 1;
+    var indexTimes_vol_xiebo = 1;
+    var timeStart = $("#timeStart").val();
+    var timeEnd = $("#timeEnd").val();
+
+    /*用户-查询*/
+    $('.btn_search').bind('click',function(e){
+        init(sessionStorage.deviceID);
+    });
+    function  manageQueryData(){}
+
+    var mydate=new Date();//通过new方法创建对象
+    var _year = mydate.getFullYear();
+    var _month = (mydate.getMonth()+1)<10?'0'+(mydate.getMonth()+1):mydate.getMonth()+1;
+    var _date = mydate.getDate()<10?'0'+mydate.getDate():mydate.getDate();
+    var _mydate = _year+'-'+_month+'-'+_date;
+    if($('#timeStart').val()){
+        timeStart = $('#timeStart').val()+' 00:00:00:000';
+    }else{
+        $('#timeStart').val(_mydate);
+        timeStart = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 00:00:00:000';
+    }
+    if($('#timeEnd').val()){
+        timeEnd = $('#timeEnd').val()+' 00:00:00:000';
+    }else{
+        $('#timeEnd').val(_mydate);
+        timeEnd = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 23:59:59:000';
+    }
+
+
+    // 图标展示  ====================================================
+    $('#eric').click(function(){
+        $('#eric').addClass('color_action');
+        $('#eric_xiebo').removeClass('color_action');
+        $('#vol').removeClass('color_action');
+        $('#vol_xiebo').removeClass('color_action');
+        
+        /*隐藏div图表*/
+        $('#echarts_eric').removeClass('none');
+        
+        $('#echarts_eric_xieboI').addClass('none');
+        $('#echarts_eric_xiebo').addClass('none');
+        
+        $('#echarts_vol').addClass('none');
+        $('#echarts_vol_xieboI').addClass('none');
+        $('#echarts_vol_xiebo').addClass('none');
+        // echarts_eric.showLoading();
+        organizationData('eric',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);//  获取过电压保护器的温度波形
+    })
+
+    $('#eric_xiebo').click(function(){
+        $('#eric_xiebo').addClass('color_action');
+        $('#eric').removeClass('color_action');
+        $('#vol').removeClass('color_action');
+        $('#vol_xiebo').removeClass('color_action');
+
+        /*隐藏div图表*/
+        $('#echarts_eric').addClass('none');
+
+        $('#echarts_eric_xieboI').removeClass('none');
+        $('#echarts_eric_xiebo').removeClass('none');
+
+        $('#echarts_vol').addClass('none');
+        $('#echarts_vol_xieboI').addClass('none');
+        $('#echarts_vol_xiebo').addClass('none');
+        // echarts_eric_xiebo.showLoading();
+        organizationData('eric_xiebo',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);// 获取过电压保护器的湿度波形
+    })
+
+
+
+    $('#vol').click(function(){
+        $('#vol').addClass('color_action');
+        $('#eric').removeClass('color_action');
+        $('#eric_xiebo').removeClass('color_action');
+        $('#vol_xiebo').removeClass('color_action');
+
+        /*隐藏div图表*/
+        $('#echarts_eric_xieboI').addClass('none');
+        $('#echarts_eric_xiebo').addClass('none');
+
+        $('#echarts_eric').addClass('none');
+        $('#echarts_vol').removeClass('none');
+        $('#echarts_vol_xieboI').addClass('none');
+        $('#echarts_vol_xiebo').addClass('none');
+        // echarts_vol.showLoading();
+        organizationData('vol',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);// 查询保护器泄漏电流波形
+
+    })
+    $('#vol_xiebo').click(function(){
+        $('#vol_xiebo').addClass('color_action');
+        $('#eric').removeClass('color_action');
+        $('#eric_xiebo').removeClass('color_action');
+        $('#vol').removeClass('color_action');
+
+        /*隐藏div图表*/
+        $('#echarts_eric').addClass('none');
+
+        $('#echarts_eric_xieboI').addClass('none');
+        $('#echarts_eric_xiebo').addClass('none');
+
+        $('#echarts_vol').addClass('none');
+        $('#echarts_vol_xieboI').removeClass('none');
+        $('#echarts_vol_xiebo').removeClass('none');
+        // echarts_vol_xiebo.showLoading();
+        organizationData('vol_xiebo',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);// 查询保护器泄漏电流波形
+    })
+
+
+
+    // 最大值最小值 初始化  ============================================================
+    $('#max').addClass('color_action');
+    $('#min').click(function(){
+        getEricTHDMaxAndMinByABC('min',timeStart,timeEnd);
+        $('#min').addClass('color_action');
+        $('#max').removeClass('color_action');
+        $('#average').removeClass('color_action');
+    })
+    $('#max').click(function(){
+        getEricTHDMaxAndMinByABC('max',timeStart,timeEnd);
+        $('#max').addClass('color_action');
+        $('#min').removeClass('color_action');
+        $('#average').removeClass('color_action');
+    })
+    $('#average').click(function(){
+        getEricTHDMaxAndMinByABC('average',timeStart,timeEnd);
+        $('#average').addClass('color_action');
+        $('#min').removeClass('color_action');
+        $('#max').removeClass('color_action');
+    })
+
+
+    var Electric_type = 1;
+    // 电流
+    var xAxis_Electric_name=[];
+    var series_Electric_a=[];
+    var series_Electric_b=[];
+    var series_Electric_c=[];
+    var series_Electric_0=[];
+
+    // 电压
+    var xAxis_voltage_name=[];
+    var series_voltage_a=[];
+    var series_voltage_b=[];
+    var series_voltage_c=[];
+    var series_voltage_0=[];
+
+
+    function  organizationData(indexName,indexTimes,indexTimes_vol_xiebo,monitorFlag,timeStart,timeEnd){
+//        var data = {deviceId:monitorFlag,timeStart:timeStart,timeEnd:timeEnd};
+        $('.nullData').remove();
+        var data = {deviceId:sessionStorage.deviceID,timeStart:timeStart,timeEnd:timeEnd};
+        // data.token=sessionStorage.token;
+        if(indexName == 'eric'){  // 电流
+            xAxis_Electric_name=[];
+            series_Electric_a=[];
+            series_Electric_b=[];
+            series_Electric_c=[];
+            series_Electric_0=[];
+            $.ajax({
+                url:rooturl+'/eric/getEricElectric.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#echarts_eric').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_Electric_name.push(day_Arr[i].time);
+                                series_Electric_a.push(day_Arr[i].Electric_a);
+                                series_Electric_b.push(day_Arr[i].Electric_b);
+                                series_Electric_c.push(day_Arr[i].Electric_c);
+                                series_Electric_0.push(day_Arr[i].Electric_0);
+                            }
+                        };
+                        Statistics_btn('eric');// 展示图表
+                        echarts_eric.hideLoading();
+                    }
+                }
+            });
+        }else if(indexName == 'vol'){   // 电压
+            xAxis_voltage_name=[];
+            series_voltage_a=[];
+            series_voltage_b=[];
+            series_voltage_c=[];
+            series_voltage_0=[];
+            $.ajax({
+                url:rooturl+'/eric/getEricVoltage.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#echarts_vol').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_voltage_name.push(day_Arr[i].time);
+                                series_voltage_a.push(day_Arr[i].voltage_a);
+                                series_voltage_b.push(day_Arr[i].voltage_b);
+                                series_voltage_c.push(day_Arr[i].voltage_c);
+                                series_voltage_0.push(day_Arr[i].voltage_0);
+                            }
+                        };
+                        Statistics_btn('vol');// 展示图表
+                        echarts_vol.hideLoading();
+                    };
+                }
+            });
+        } else if(indexName == 'eric_xiebo'){  // 电流谐波
+            xAxis_Electric_name = [];
+            series_Electric_a = [];
+            series_Electric_b = [];
+            series_Electric_c = [];
+            series_Electric_0 = [];
+            $.ajax({
+                url:rooturl+'/eric/getEricElectricTHD.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        var timeLength = 0;
+                        if(day_Arr.length <= 0){
+                            $('#echarts_eric_xiebo').append(nullDataDom);
+                            $('#select_Elec').hide();
+                        }else{
+                            $('#select_Elec').show();
+                            for (var i = 0; i < day_Arr.length; i++) {
+                                if (i == 0) {
+                                    timeLength = day_Arr[i]['paramA'].length;
+                                }
+                                xAxis_Electric_name.push(day_Arr[i].timestamp);
+                                series_Electric_a.push(day_Arr[i]['paramA'][indexTimes]);
+                                series_Electric_b.push(day_Arr[i]['paramB'][indexTimes]);
+                                series_Electric_c.push(day_Arr[i]['paramC'][indexTimes]);
+                            }
+                        };
+                        getStatisticsElectricData_select(timeLength, indexTimes);
+                        Statistics_btn('eric_xiebo');// 展示图表
+                        echarts_eric_xiebo.hideLoading();
+                    }
+                }
+            });
+        } else if(indexName == 'vol_xiebo'){  // 电压谐波
+            xAxis_voltage_name = [];
+            series_voltage_a = [];
+            series_voltage_b = [];
+            series_voltage_c = [];
+            series_voltage_0 = [];
+            $.ajax({
+                url:rooturl+'/eric/getEricVoltageTHD.v1',
+                data:data,
+                dataType:'json',
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        var timeLength = 0;
+                        if(day_Arr.length <= 0){
+                            $('#echarts_vol_xiebo').append(nullDataDom);
+                            $('#select_Vol').hide();
+                        }else{
+                            $('#select_Vol').show();
+                            for (var i = 0; i < day_Arr.length; i++) {
+                                if (i == 0) {
+                                    timeLength = day_Arr[i]['paramA'].length;
+                                }
+                                console.log("indexVol:" + 2);
+                                xAxis_voltage_name.push(day_Arr[i].timestamp);
+                                series_voltage_a.push(day_Arr[i]['paramA'][indexTimes_vol_xiebo]);
+                                series_voltage_b.push(day_Arr[i]['paramB'][indexTimes_vol_xiebo]);
+                                series_voltage_c.push(day_Arr[i]['paramC'][indexTimes_vol_xiebo]);
+                            }
+                        };
+                        Statistics_btn('vol_xiebo');// 展示图表
+                        echarts_vol_xiebo.hideLoading();
+                        getStatisticsEricVoltageData_select(timeLength, indexTimes_vol_xiebo);
+                    }
+                }
+            });
+        }
+    }
+
+
+    function getStatisticsElectricData_select(timeLength, indexTimes) {
+        var tpl4 = '';
+        $('#select_Elec').html('')
+        if (timeLength > 0) {
+            for (var i = 1; i <= timeLength; i++) {
+                if ((i - 1) == indexTimes) {
+                    tpl4 += `<input type="radio" checked name="electricity" value="${i - 1}">${i}次`;
+                } else {
+                    tpl4 += `<input type="radio" name="electricity" value="${i - 1}">${i}次`;
+                }
+                if (i == 20) {
+                    tpl4 += `<br/>`
+                }
+            }
+        }
+        $('#select_Elec').append(tpl4);
+
+        $('input[type=radio][name=electricity]').change(function () {
+            indexTimes = $(this).val();
+           /* if($('#timeStart').val()){
+                timeStart = $('#timeStart').val()+' 00:00:00:000';
+            }else{
+                timeStart = '1970-01-01 00:00:00:000';
+            }
+            if($('#timeEnd').val()){
+                timeEnd = $('#timeEnd').val()+' 00:00:00:000';
+            }else{
+                timeEnd = '2018-06-26 01:00:00:000';
+            }*/
+            organizationData('eric_xiebo',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);
+            Statistics_btn('eric_xiebo');// 展示图表
+        })
+    }
+
+    function getStatisticsEricVoltageData_select(timeLength, indexTimes_vol_xiebo) {
+        var tpl4 = '';
+        $('#select_Vol').html('')
+        if (timeLength > 0) {
+            for (var i = 1; i <= timeLength; i++) {
+                if ((i - 1) == indexTimes_vol_xiebo) {
+                    tpl4 += `<input type="radio" checked name="voltage" value="${i - 1}">${i}次`;
+                } else {
+                    tpl4 += `<input type="radio" name="voltage" value="${i - 1}">${i}次`;
+                }
+                if (i == 20) {
+                    tpl4 += `<br/>`
+                }
+            }
+        }
+        $('#select_Vol').append(tpl4);
+
+        $('input[type=radio][name=voltage]').change(function () {
+            indexTimes_vol_xiebo = $(this).val();
+           /* if($('#timeStart').val()){
+                timeStart = $('#timeStart').val()+' 00:00:00:000';
+            }else{
+                timeStart = '1970-01-01 00:00:00:000';
+            }
+            if($('#timeEnd').val()){
+                timeEnd = $('#timeEnd').val()+' 00:00:00:000';
+            }else{
+                timeEnd = '2018-06-26 01:00:00:000';
+            }*/
+            organizationData('vol_xiebo',indexTimes,indexTimes_vol_xiebo,sessionStorage.deviceID,timeStart,timeEnd);
+            Statistics_btn('vol_xiebo');// 展示图表
+        })
+    }
+
+
+    function Statistics_btn(indexName) {
+        if (indexName == 'eric') {
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '电流',
+                    x: '20',
+                    y: '0'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['A相电流', 'B相电流', 'C相电流', '3I0电流'],
+                    x: '20px',
+                    y: '30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_Electric_name
+                },
+                yAxis: {
+                    show: true,
+                    name: '电流(A)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} A'
+                    }
+                },
+                series: [
+                    {
+                        name: 'A相电流',
+                        type: 'line',
+                        data: series_Electric_a
+                    },
+                    {
+                        name: 'B相电流',
+                        type: 'line',
+                        data: series_Electric_b
+                    },
+                    {
+                        name: 'C相电流',
+                        type: 'line',
+                        data: series_Electric_c
+                    },
+                    {
+                        name: '3I0电流',
+                        type: 'line',
+                        data: series_Electric_0
+                    }
+
+                ]
+            };
+            echarts_eric.clear();
+            echarts_eric.setOption(option_one);
+        } else if (indexName == 'vol') {
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '电压',
+                    x: '20',
+                    y: '0'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['A相电压', 'B相电压', 'C相电压', '3U0电压'],
+                    x: '20px',
+                    y: '30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_voltage_name
+                },
+                yAxis: {
+                    show: true,
+                    name: ' 电压(V)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} V'
+                    }
+                },
+                series: [
+                    {
+                        name: 'A相电压',
+                        type: 'line',
+                        data: series_voltage_a
+                    },
+                    {
+                        name: 'B相电压',
+                        type: 'line',
+                        data: series_voltage_b
+                    },
+                    {
+                        name: 'C相电压',
+                        type: 'line',
+                        data: series_voltage_c
+                    },
+                    {
+                        name: '3U0电压',
+                        type: 'line',
+                        data: series_voltage_0
+                    }
+                ]
+            };
+            echarts_vol.clear();
+            echarts_vol.setOption(option_one);
+        } else if (indexName == 'eric_xiebo') {
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '电流谐波',
+                    x: '20',
+                    y: '0'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['A相电流', 'B相电流', 'C相电流', '3I0电流'],
+                    x: '20px',
+                    y: '30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_Electric_name
+                },
+                yAxis: {
+                    show: true,
+                    name: '电流(A)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} A'
+                    }
+                },
+                series: [
+                    {
+                        name: 'A相电流',
+                        type: 'line',
+                        data: series_Electric_a
+                    },
+                    {
+                        name: 'B相电流',
+                        type: 'line',
+                        data: series_Electric_b
+                    },
+                    {
+                        name: 'C相电流',
+                        type: 'line',
+                        data: series_Electric_c
+                    },
+                    {
+                        name: '3I0电流',
+                        type: 'line',
+                        data: series_Electric_0
+                    }
+
+                ]
+            };
+            echarts_eric_xiebo.clear();
+            echarts_eric_xiebo.setOption(option_one);
+        } else if (indexName == 'vol_xiebo') {
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '电压谐波',
+                    x: '20',
+                    y: '0'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['A相电压', 'B相电压', 'C相电压', '3U0电压'],
+                    x: '20px',
+                    y: '30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_voltage_name
+                },
+                yAxis: {
+                    show: true,
+                    name: ' 电压(V)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} V'
+                    }
+                },
+                series: [
+                    {
+                        name: 'A相电压',
+                        type: 'line',
+                        data: series_voltage_a
+                    },
+                    {
+                        name: 'B相电压',
+                        type: 'line',
+                        data: series_voltage_b
+                    },
+                    {
+                        name: 'C相电压',
+                        type: 'line',
+                        data: series_voltage_c
+                    },
+                    {
+                        name: '3U0电压',
+                        type: 'line',
+                        data: series_voltage_0
+                    }
+                ]
+            };
+            echarts_vol_xiebo.clear();
+            echarts_vol_xiebo.setOption(option_one);
+        }
+    }
+
+
+    // 详细数据
+    function  getEricTHDMaxAndMinByABC(type,timeStart,timeEnd){
+        var data = {deviceId:sessionStorage.deviceID,timeStart:timeStart,timeEnd:timeEnd};
+//        var data = {deviceId:sessionStorage.deviceID,timeStart:'1970-01-01 00:00:00:000',timeEnd:'2018-05-26 01:00:00:000'};
+        xAxis_Electric_name=[];
+        series_Electric_a=[];
+        series_Electric_b=[];
+        series_Electric_c=[];
+        series_Electric_0=[];
+        $('#min_max_data').empty();
+        POST("/eric/getEricTHDMaxAndMinByABC.v1", data, function (res) {
+            if (res.code == '0') {
+                var result = res.data;
+                var html = '';
+                if(type == 'min'){
+                    html =  '<div class="div1">'+
+                            '<tr>最小电压</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Voltage_A_Min+'V</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Voltage_B_Min+'V</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Voltage_C_Min+'V</label></dd>'+
+                            '</div>'+
+                            '<div class="div2">'+
+                            '<tr>最小电流</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Electric_A_Min+'A</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Electric_B_Min+'A</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Electric_C_Min+'A</label></dd>'+
+                            '</div>';
+                }else if(type == 'max'){
+                    html =  '<div class="div1">'+
+                            '<tr>最大电压</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Voltage_A_Max+'V</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Voltage_B_Max+'V</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Voltage_C_Max+'V</label></dd>'+
+                            '</div>'+
+                            '<div class="div2">'+
+                            '<tr>最大电流</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Electric_A_Max+'A</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Electric_B_Max+'A</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Electric_C_Max+'A</label></dd>'+
+                            '</div>';
+                }else if(type == 'average'){
+                    html =  '<div class="div1">'+
+                            '<tr>平均电压</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Voltage_A_Average+'V</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Voltage_B_Average+'V</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Voltage_C_Average+'V</label></dd>'+
+                            '</div>'+
+                            '<div class="div2">'+
+                            '<tr>平均电流</tr>'+
+                            '<dd><label>A相：</label><label>'+result.Electric_A_Average+'A</label></dd>'+
+                            '<dd><label>B相：</label><label>'+result.Electric_B_Average+'A</label></dd>'+
+                            '<dd><label>C相：</label><label>'+result.Electric_C_Average+'A</label></dd>'+
+                            '</div>';
+                }
+                $('#min_max_data').append(html);
+            }
+        });
+    }
+
+    //三级联动
+
+   // 三级联动
+   POST('/sys/company/queryStaticThree.v1',{createBy:sessionStorage.id},function(res){
+        console.log(res.data)
+        var tpl1='';
+        var tpl2='' ;
+        var tpl3='' ;
+        var x;
+        var k=0;
+        var j=0;
+
+        for(var i=0;i<res.data.length;i++){
+            tpl1 +=' <option value="'+ i +'">'+ res.data[i].companyName +'</option>';
+
+        }
+        for(let i of res.data[0].monitorStationDtos){
+            tpl2 +='<option value="'+ k +'">'+ i.stationName +'</option>';
+            k++;
+        }
+        for(let i of res.data[0].monitorStationDtos[0].linesOnMasterDtos){
+            if(j==0){
+                sessionStorage.deviceID =i.monitorFlag;
+            }
+            tpl3+='<option value="'+ j +'">'+i.masterName +'</option>';
+            j++
+
+        }
+        $('#company').append(tpl1);
+        $('#site').append(tpl2);
+        $('#generatrix').append(tpl3);
+
+        init(sessionStorage.deviceID);
+
+        $('#company').change(function(){
+            deviceID='';
+            tpl2='';
+            tpl3='';
+            k=0;
+            j=0;
+            $('#site').empty();
+            $('#generatrix').empty();
+            x=$('#company  option:selected').val();
+            parseInt(x);
+            for(let j of res.data[x].monitorStationDtos){
+                tpl2 +='<option value="'+ k +'">'+ j.stationName +'</option>';
+                k++;
+            }
+            for(let i of res.data[x].monitorStationDtos[0].linesOnMasterDtos){
+                if(j==0){
+                    sessionStorage.deviceID =i.monitorFlag;
+                }
+                tpl3+='<option value="'+ j +'">'+ i.masterName +'</option>';
+                // deviceID=i.monitorFlag;
+                j++;
+            }
+            $('#site').append(tpl2);
+            $('#generatrix').append(tpl3);
+
+            init(sessionStorage.deviceID);
+        })
+        $('#site').change(function(){
+            tpl3='';
+            j=0;
+            deviceID='';
+            $('#generatrix').empty();
+            x=$('#company  option:selected').val();
+            parseInt(x);
+            var y=$('#site  option:selected').val();
+            parseInt(y);
+            for(let i of res.data[x].monitorStationDtos[y].linesOnMasterDtos){
+                if(j==0){
+                    sessionStorage.deviceID =i.monitorFlag;
+                }
+                tpl3+='<option value="'+ j +'">'+ i.masterName+'</option>';
+
+                j++
+            }
+            $('#generatrix').append(tpl3);
+            init(sessionStorage.deviceID);
+        })
+        $('#generatrix').change(function(){
+            deviceID='';
+            j=0;
+            var z=$('#generatrix  option:selected').val();
+            parseInt(z);
+            x=$('#company  option:selected').val();
+            parseInt(x);
+            var y=$('#site  option:selected').val();
+            parseInt(y);
+            for(let i of res.data[x].monitorStationDtos[y].linesOnMasterDtos){
+                if(j==z){
+                    sessionStorage.deviceID =i.monitorFlag;
+                    break;
+                }
+                j++
+            }
+            init(sessionStorage.deviceID);
+        })
+    });
+
+
+
+
+    function init(monitorFlag){
+        var mydate=new Date();//通过new方法创建对象
+        if($('#timeStart').val()){
+            timeStart = $('#timeStart').val()+' 00:00:00:000';
+        }else{
+            timeStart = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 00:00:00:000';
+//            timeStart = '1970-01-01 00:00:00:000';
+        }
+        if($('#timeEnd').val()){
+            timeEnd = $('#timeEnd').val()+' 23:59:59:000';
+        }else{
+//            timeEnd = '2018-06-26 01:00:00:000';
+            timeEnd = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 23:59:59:000';
+        }
+        getEricTHDMaxAndMinByABC('max',timeStart,timeEnd);
+        // 第一次进来执行温度波形 初始化  organizationData
+        $('#'+sessionStorage.tabID).click();
+    }
+</script>

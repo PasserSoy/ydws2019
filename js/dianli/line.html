@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="assets/css/bootstrap.min.css?v=1.6.22" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=1.6.22"/>
+  <link href="assets/css/codemirror.css?v=1.6.22" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="font/css/font-awesome.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css?v=1.6.22" />
+  <script src="assets/js/jquery.min.js?v=1.6.22"></script>
+  <link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />
+  <link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+  <link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+  <script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+  <script src="assets/layer/layer.js?v=1.6.22" type="text/javascript" ></script>
+  <script src="assets/layui/layui.all.js?v=1.6.22" type="text/javascript" ></script>
+  <script src="assets/js/html5shiv.js?v=1.6.22" type="text/javascript" ></script>
+  <script src="assets/dist/echarts.js?v=1.6.22"></script>
+
+    <title>line</title>
+
+    <style>
+      
+      #line{
+        margin: 20px auto;
+        box-sizing: border-box;
+        background: white;
+      }
+
+      #line>div{
+        margin: 20px 0;
+      }
+
+      .line_top p,
+      .line_center p{
+        padding: 10px;
+        color: gray;
+        border-bottom: solid 1px #ccc;
+      }
+      
+      .line_top_content{
+        width: 100%;
+        height: 200px;
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .line_top_content li{
+        width: 120px;
+        height: 180px;
+        list-style: none;
+        display: inline-block;
+      }
+
+      .line_top_content li span{
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+      }
+
+      .line_top_content li span:first-of-type{
+        margin-bottom: 10px;
+      }
+
+      .line_top_content_border{
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+        text-align: center;
+        font-size: 66px;
+        border: solid 4px red;
+        border-radius: 50%;
+        color: rgb(87, 87, 87);
+      }
+
+      .line_top_content_green{
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+        text-align: center;
+        font-size: 60px;
+        color: green;
+      }
+
+      .line_center_content{
+        width: 1000px;
+        height: 300px;
+        border: solid 1px #ccc;
+      }
+
+      .line_bottom p{
+        color: gray;
+      }
+
+      .line_bottom_electricity,
+      .line_bottom_voltage{
+        width: 100%;
+        height: 300px;
+        border: solid 1px red;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div id="line">
+
+      <div class="line_top">
+        <p>苏州供电公司XXX区</p>
+        <ul class="line_top_content">
+          <li>
+            <span>故障线路</span>
+            <span class="line_top_content_border">0</span>
+          </li>
+          <li>
+            <span class="line_top_content_green">12</span>
+            <span>线路总数</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="line_center">
+        <p>线路详情</p>
+        <div class="line_center_content">
+          <canvas id="myCanvas" width="1000" height="300">您的浏览器暂不支持canvas,请用其他浏览器试试吧~</canvas>
+        </div>
+      </div>
+
+      <div class="line_bottom">
+        <p>
+          节点：
+          <select name="node" id="node">
+            <option value="0">00000000</option>
+            <option value="1">11111111</option>
+            <option value="2">22222222</option>
+            <option value="3">33333333</option>
+          </select>
+        </p>
+        <p>电流有效值</p>
+        <div class="line_bottom_electricity"></div>
+        <p>电压有效值</p>
+        <div class="line_bottom_voltage"></div>
+      </div>
+    </div>
+    
+    <!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js?v=1.6.22"></script>-->
+    <script src="js/common.js?v=1.6.22"></script>
+    <script>
+
+      $.ajax({
+      	url:"http://120.79.6.179/sys/monitorStation/queryMonitorStation.v1",
+      	type: 'post',
+        data: {
+          token: sessionStorage.token,
+          monitorStationId: sessionStorage.monitorStationId,
+          flag: 'three'
+        },
+      	success: function (res) {
+          var c = document.getElementById("myCanvas");
+          var ctx = c.getContext("2d");
+
+          // console.log(res.data)
+          console.log(res.data.list[0].linesOnMasterDtos[0].linesOnBranchDtos)
+          let arr = res.data.list[0].linesOnMasterDtos[0].linesOnBranchDtos
+          for (let i=0; i< arr.length; i++) {
+
+            let moveLength = i*100
+            let minArr = arr[i].monitorPointDtos
+            let minArrData = []
+            console.log(minArr)
+            for (let i=0; i<minArr.length; i++) {
+              minArrData.push(minArr[i].monitorFlag)
+            }
+            console.log(minArrData)
+
+            ctx.moveTo(50+moveLength, 50);
+            ctx.lineTo(150+moveLength, 50);
+
+            ctx.moveTo(100+moveLength, 50);
+            ctx.lineTo(100+moveLength, 250);
+
+            ctx.moveTo(100+moveLength, 250);
+            ctx.lineTo(90+moveLength, 240);
+
+            ctx.moveTo(100+moveLength, 250);
+            ctx.lineTo(110+moveLength, 240);
+
+            $.ajax({
+              url: 'http://120.79.6.179/eric/getActionCount.v1',
+              type: 'post',
+              data: {
+                token: sessionStorage.token,
+                sensorIds: minArrData.join(',')
+              },
+              success: function (res) {
+                console.log(res.data)
+                for (let i=0; i<res.data.length; i++) {
+                  if (i == 0) {
+                    ctx.fillText(res.data[i].count, 95 + moveLength, 260);
+                  } else if (i == 1) {
+                    ctx.fillText(res.data[i].count, 95 + moveLength, 270);
+                  } else if (i == 2) {
+                    ctx.fillText(res.data[i].count, 95 + moveLength, 280);
+                  }
+                }
+              }
+            })
+
+            ctx.fillText(arr[i].branchName, 50 + moveLength, 70);
+
+            ctx.stroke();
+
+          }
+      	}
+      })
+
+
+
+      //  图表格
+      $(function(){
+        getStatisticsElectricData();  // 电流
+        getStatisticsEricVoltageData();// 电压
+        Statistics_btn();
+      });
+
+      var Electric_type = 1;
+      // 电流
+      var xAxis_Electric_name=[];
+      var series_Electric_a=[];
+      var series_Electric_b=[];
+      var series_Electric_c=[];
+      var series_Electric_0=[];
+      // 电压
+      var xAxis_voltage_name=[];
+      var series_voltage_a=[];
+      var series_voltage_b=[];
+      var series_voltage_c=[];
+      var series_voltage_0=[];
+
+      // 电流
+      function  getStatisticsElectricData(Electric_type){
+        var data = {deviceId:'00000000000000002017',timeStart:'1970-01-01 00:00:00:000',timeEnd:'2018-05-26 01:00:00:000'};
+        xAxis_Electric_name=[];
+        series_Electric_a=[];
+        series_Electric_b=[];
+        series_Electric_c=[];
+        series_Electric_0=[];
+
+        POST("/eric/getEricElectric.v1", data, function (res) {
+          if (res.code == '0') {
+            var day_Arr = res.data;
+            for(var i=0;i<day_Arr.length;i++){
+              xAxis_Electric_name.push(i);
+              series_Electric_0.push(day_Arr[i].Electric_0);
+              series_Electric_a.push(day_Arr[i].Electric_a);
+              series_Electric_b.push(day_Arr[i].Electric_b);
+              series_Electric_c.push(day_Arr[i].Electric_c);
+            }
+          }
+        });
+      }
+
+      // 电压
+      function  getStatisticsEricVoltageData(){
+        var data = {deviceId:'00000000000000002017',timeStart:'1970-01-01 00:00:00:000',timeEnd:'2018-05-26 01:00:00:000'};
+        xAxis_voltage_name=[];
+        series_voltage_a=[];
+        series_voltage_b=[];
+        series_voltage_c=[];
+        series_voltage_0=[];
+
+        POST("/eric/getEricVoltage.v1", data, function (res) {
+          if (res.code == '0') {
+            var day_Arr = res.data;
+            for(var i=0;i<day_Arr.length;i++){
+              xAxis_voltage_name.push(i);
+              series_voltage_0.push(day_Arr[i].voltage_0);
+              series_voltage_a.push(day_Arr[i].voltage_a);
+              series_voltage_b.push(day_Arr[i].voltage_b);
+              series_voltage_c.push(day_Arr[i].voltage_c);
+            }
+          }
+        });
+      }
+
+
+      function Statistics_btn(){
+
+        require.config({
+          paths: {
+            echarts: './assets/dist'
+          }
+        });
+        require(
+                [
+                  'echarts',
+                  'echarts/theme/macarons',
+                  'echarts/chart/line',   // 按需加载所需图表，如需动态类型切换功能，别忘了同时加载相应图表
+                  'echarts/chart/bar'
+                ],
+                function (ec,theme) {
+                  var myChart_line_bottom_electricity = ec.init(document.getElementById('line_bottom_electricity'),theme);
+                  var myChart_line_bottom_voltage = ec.init(document.getElementById('line_bottom_voltage'),theme);
+                  option_one = {
+                    color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                    title: {
+                      text: '母线四相电流波形'
+                    },
+                    tooltip: {
+                      trigger: 'axis'
+                    },
+                    legend: {
+                      data:['A相电流','B相电流','C相电流','I0电流']
+                    },
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                    },
+                    toolbox: {
+                      feature: {
+                        saveAsImage: {}
+                      }
+                    },
+                    xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: xAxis_Electric_name
+                    },
+                    yAxis: {
+                      type: 'value'
+                    },
+                    series: [
+                      {
+                        name:'A相电流',
+                        type:'line',
+                        stack: '总量',
+                        data:series_Electric_a
+                      },
+                      {
+                        name:'B相电流',
+                        type:'line',
+                        stack: '总量',
+                        data:series_Electric_b
+                      },
+                      {
+                        name:'C相电流',
+                        type:'line',
+                        stack: '总量',
+                        data:series_Electric_c
+                      },
+                      {
+                        name:'I0电流',
+                        type:'line',
+                        stack: '总量',
+                        data:series_Electric_0
+                      }
+                    ]
+                  };
+                  myChart_line_bottom_electricity.setOption(option_one);
+
+                  option_two = {
+                    color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                    title: {
+                      text: '母线四相电压波形'
+                    },
+                    tooltip: {
+                      trigger: 'axis'
+                    },
+                    legend: {
+                      data:['A相电压','B相电压','C相电压','U0电压']
+                    },
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                    },
+                    toolbox: {
+                      feature: {
+                        saveAsImage: {}
+                      }
+                    },
+                    xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: xAxis_voltage_name
+                    },
+                    yAxis: {
+                      type: 'value'
+                    },
+                    series: [
+                      {
+                        name:'A相电压',
+                        type:'line',
+                        stack: '总量',
+                        data: series_voltage_a
+                      },
+                      {
+                        name:'B相电压',
+                        type:'line',
+                        stack: '总量',
+                        data:series_voltage_b
+                      },
+                      {
+                        name:'C相电压',
+                        type:'line',
+                        stack: '总量',
+                        data:series_voltage_c
+                      },
+                      {
+                        name:'U0电压',
+                        type:'line',
+                        stack: '总量',
+                        data:series_voltage_0
+                      }
+
+                    ]
+                  };
+                  myChart_line_bottom_voltage.setOption(option_two);
+                })
+      }
+
+
+    </script>
+  </body>
+</html>

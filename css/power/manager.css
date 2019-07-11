@@ -1,0 +1,41 @@
+
+.myPage{
+    /* padding-right: 50px;
+    margin-left: 30%; */
+    font-size: 15px;
+    text-align: center;
+}
+.table_menu_list{
+    width: 100% !important;
+}
+.table_menu_list th{
+    background-color:#a1a1a1 ;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+ul .selected_role li {
+    float:left; /* 向左漂移，将竖排变为横排 */
+    padding: 3px
+}
+a:hover{
+    background-color: #bfcbd6; /* 背景色 */
+    color: #465c71;  /*文字颜色*/
+    text-decoration: none; /*不显示超链接下划线 */
+}
+#one{width:200px; height:180px; float:left}
+#two{width:50px; height:180px; float:left}
+#three{width:200px; height:180px; float:left}
+.btn_select{width:50px; height:30px; margin-top:10px; cursor:pointer;}
+
+ input[ type="button"]{
+    height: 25px;
+    line-height: 25px;
+}
+
+#select_{
+    float: left;
+    margin: 10px 10px;
+    padding-left: 5px;
+}

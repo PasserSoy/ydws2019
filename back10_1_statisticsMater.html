@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>统计信息</title>
+  <link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22">
+  <link rel="stylesheet" href="css/back10.css?v=1.6.22">
+</head>
+<body>
+  <div class="loadjy"> <div><span><i></i><i></i><i></i></span></div> </div>
+  <div class="statist">
+    <!-- 查询条件 -->
+    <div class="filter">
+      <!-- 筛选条件 -->
+      <div class="condition stseries">
+        <label for="company"> 公司: <select name="company" id="company" data-id="stcompany"></select> </label>
+        <label for="monitor"> 监测站: <select name="monitor" id="monitor" data-id="stmonitorstation"><option value="">全部</option></select> </label>
+        <label for="bus"> 母线: <select name="bus" id="bus" data-id="stgeneratrix"><option value="">全部</option></select> </label>
+        <label for="masterFlag" class="checkbox"> <input type="checkbox" name="masterFlag" id="masterFlag" checked> 母线 </label>
+        <label for="voltageFlag" class="checkbox"> <input type="checkbox" name="voltageFlag" id="voltageFlag" checked> 过电压保护器 </label>
+        <label for="temperFlag" class="checkbox"> <input type="checkbox" name="temperFlag" id="temperFlag" checked> 温度采集器 </label>
+      </div>
+      <!-- 筛选时间及查询按钮 -->
+      <div class="time">
+        <label for="timeStart"> 日期范围: <input type="date" name="timeStart" id="timeStart"> </label>
+        <label>--</label>
+        <label for="timeEnd"> <input type="date" name="timeEnd" id="timeEnd"> </label>
+        <label for="week" class="checkbox"> <input type="radio" name="chooseDate" id="week"> 周报 </label>
+        <label for="month" class="checkbox"> <input type="radio" name="chooseDate" id="month"> 月报 </label>
+        <label for="quarter" class="checkbox"> <input type="radio" name="chooseDate" id="quarter"> 季报 </label>
+        <label for="year" class="checkbox"> <input type="radio" name="chooseDate" id="year"> 年报 </label>
+        <label for="choose" class="checkbox"> <input type="radio" name="chooseDate" id="choose" checked> 自选日期 </label>
+        <button disabled class="btns search"><i></i> 查询</button>
+        <button disabled class="btns print"><i></i> 打印</button>
+        <a href="##" id="download" download><button disabled class="btns save"><i></i> 保存</button></a>
+      </div>
+    </div>
+    <!-- 结果表格 -->
+    <div class="allTable">
+      <!-- <div class="loading">
+        <div class="loadingD">
+          <div class="loadC"></div>
+          <p>正在请求数据...</p>
+        </div>
+      </div>请求 -->
+      <!-- 母线 -->
+      <div class="tables" data-name="masterFlag">
+        <h3 class="title">母线</h3>
+        <table class="mytable momTable" data-table="maxValueEric"><!-- 设置data-table是为了排序时修改对应的对象 -->
+          <thead>
+            <tr class="head">
+              <th>母线名称</th><th>相别</th>
+              <th class="sort phase" data-type="voltage">电压（kV）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="Electric">电流（A）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="Power_Factor">功率因数（cosΦ）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="Power_Apparent">视在功率（VA）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="Power_Use">有功功率（W）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="Power_Nouse">无功功率（Var）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="dyjb">电压总畸变率（THDu）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="dljb">电流总畸变率（THDi）<span><i class="up"></i><i class="down"></i></span></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- 过电压保护器 -->
+      <div class="tables" data-name="voltageFlag">
+        <h3 class="title">过电压保护器</h3>
+        <table class="mytable gdyTable" data-table="maxValueVoltage">
+          <thead>
+            <tr class="head">
+              <th>监测设备名称</th><th>类型</th><th>相别</th>
+              <th class="sort phase" data-type="temper">温度（℃）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort phase" data-type="humidity">湿度（%RH）<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort" data-type="electric">泄漏电流（μA)<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort" data-type="dzcs">动作次数<span><i class="up"></i><i class="down"></i></span></th>
+              <th class="sort" data-type="dzsc">动作时长<span><i class="up"></i><i class="down"></i></span></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- 温度采集器 -->
+      <div class="tables" data-name="temperFlag">
+        <h3 class="title">温度采集器</h3>
+        <table class="mytable wdTable" data-table="regroupMaxValueTemper">
+          <thead>
+            <tr class="head">
+              <th>监测设备名称</th><th>类型</th>
+              <th>相别</th>
+              <th class="sort" data-type="temper_a">温度（℃）<span><i class="up"></i><i class="down"></i></span></th>
+              <th>相别</th>
+              <th class="sort" data-type="temper_b">温度（℃）<span><i class="up"></i><i class="down"></i></span></th>
+              <th>相别</th>
+              <th class="sort" data-type="temper_c">温度（℃）<span><i class="up"></i><i class="down"></i></span></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- 报警统计 -->
+      <div class="tables">
+        <h3 class="title">报警统计</h3>
+        <table class="mytable bjTable">
+          <thead>
+            <tr class="head">
+              <th rowspan="2">报警总数</th>
+              <th colspan="9">高级报警</th>
+              <th colspan="3">中级报警</th>
+            </tr>
+            <tr class="head">
+              <!-- 高级报警 -->
+              <th>弧光接地</th><th>金属接地</th><th>过压</th><th>欠压</th>
+              <!-- <th>失压</th> -->
+              <th>泄漏</th>
+              <th>PT断线</th><th>过热</th><th>湿度超标</th><th>系统短路</th>
+              <!-- 中级报警 -->
+              <!-- <th>过电压保护器故障报警</th> -->
+              <th>系统过电压</th><th>电池电量不足</th><th>异常</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="firstTr">
+              <td class="name sumCount"></td>
+  
+              <td data-num="16">0</td><!-- 弧光接地 -->
+              <td data-num="10">0</td><!-- 金属接地 -->
+              <td data-num="12">0</td><!-- 过压 -->
+              <td data-num="14">0</td><!-- 欠压 -->
+  
+              <!-- <td data-num="unkown">0</td> --><!-- 失压 -->
+              <td data-num="22">0</td><!-- 泄漏 -->
+              <td data-num="13">0</td><!-- PT断线 -->
+              <td data-num="20">0</td><!-- 过热 -->
+              <td data-num="21">0</td><!-- 湿度超标 -->
+              <td data-num="15">0</td><!-- 系统短路 -->
+              <!-- <td data-num="unkown">0</td> --><!-- 过电压保护器故障报警 -->
+  
+              <td data-num="11">0</td><!-- 系统过电压 -->
+              <td data-num="23">0</td><!-- 电池电量不足 -->
+              <td data-num="unkown">0</td><!-- 异常 -->
+            </tr>
+          </tbody>  
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/jquery.min.js?v=1.6.22"></script>
+  <script src="assets/layer/layer.js?v=1.6.22" type="text/javascript"></script>
+  <script src="js/common.js?v=1.6.22"></script>
+  <script src="js/pagejs/back10.js?v=1.6.22"></script>
+  <script src="js/jq-print.min.js?v=1.6.22"></script>
+</body>
+</html>

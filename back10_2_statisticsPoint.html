@@ -1,0 +1,1115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="assets/css/bootstrap.min.css?v=1.6.22" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=1.6.22"/>
+    <link href="assets/css/codemirror.css?v=1.6.22" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/ace.min.css?v=1.6.22" />
+    <!--<link rel="stylesheet" href="assets/css/font-awesome.min.css?v=1.6.22" />-->
+    <!--<link rel="stylesheet" href="font/css/font-awesome.min.css?v=1.6.22" />-->
+    <!--<link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css?v=1.6.22" />-->
+    <script src="assets/js/jquery.min.js?v=1.6.22"></script>
+    <!--<link rel="stylesheet" href="assets/css/ace-ie.min.css?v=1.6.22" />-->
+    <link rel="stylesheet" href="assets/layui/css/layui.css?v=1.6.22" />
+    <link rel="stylesheet" href="css/power/manager.css?v=1.6.22" />
+    <link rel="stylesheet" href="css/power/base.css?v=1.6.22" />
+    <script src="assets/js/typeahead-bs2.min.js?v=1.6.22"></script>
+    <script src="assets/layer/layer.js?v=1.6.22" type="text/javascript" ></script>
+    <script src="js/echarts4.min.js?v=1.6.22"></script>
+    <title>报警信息</title>
+    <style type="text/css">
+        /* *{
+            background: #f9f6f1;
+        } */
+        body {/* width: 1000px; */margin: auto;}
+        *{
+            font-family: Arial, "微软雅黑";
+        }
+        .icon-plus,
+        .icon-search {
+            background: #2494f9;
+        }
+        .btn_search,
+        .page_btn {
+            border-radius: 3px;
+            /* background: #2494f9; */
+            border: none;
+            color: white;
+            padding: 0 10px;
+        }
+        .btn_search {
+            width: 110px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        li{
+            display: inline-block;
+            width: 100%;
+        }
+
+        .showData > ul li {
+            display: inline-block;
+            width: 70px;
+            height: 40px;
+            line-height: 40px;
+            float: left;
+            text-align: center;
+            padding: 0;
+            white-space: nowrap;
+        }
+
+        .box {
+            padding: 10px;
+            background: white;
+            border-bottom: solid 5px #f9f6f1;
+        }
+
+        .tab {
+            float: right;
+            padding: 0 10px;
+            padding-top: 25px;
+        }
+        .tab label {
+            min-width: 80px;
+            padding: 0 10px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #454545;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+        }
+        .active {
+            background: #2494f9 !important;
+        }
+        .color_action{
+            color: red;
+        }
+
+
+        .div1{
+            width: 200px;
+            height: 132px;
+            background: #2494f9;
+            float: left;
+            margin-left: 200px;
+            position: absolute;
+            padding: 20px 35px;
+        }
+        .div2{
+            width: 200px;
+            height: 135px;
+            margin-left: 430px;
+            background: #f89663;
+            float: left;
+            position: absolute;
+            padding: 20px 40px;
+        }
+        .div3{
+            width: 200px;
+            height: 135px;
+            margin-left: 660px;
+            background: #648e44;
+            float: left;
+            padding: 20px 40px;
+        }
+
+        .none{
+            display: none;
+        }
+        .select.box select {
+            width: 270px!important;
+            margin-bottom: 10px;
+        }
+        body {background-color: #f9f6f1;}
+        .nullData {position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9; background: #fff;display: flex;display: none;}
+        .nullData i {font-style: normal;font-size: 12px; color: #666; letter-spacing: 1px;margin: auto;}
+    </style>
+</head>
+<body >
+
+<ul>
+    <li class="tab">
+        <label id="btn-1">母线信息</label>
+        <label id="btn-2" class="active" >监测设备信息</label>
+    </li>
+</ul>
+
+<div class="select box">
+    公司：
+    <select style="width: 200px;" id="company">
+        <!-- <option value="-1">请选择</option> -->
+    </select>
+    监测站：
+    <select style="width: 150px;" id="site"></select>
+    母线：
+    <select style="width: 150px;" id="generatrix"></select>
+    支线：
+    <select style="width: 150px;" id="linesOnBranch"></select>
+    监测设备：
+    <select style="width: 150px;" id="monitorPoint"></select>
+
+</div>
+
+<div class="box">
+    开始时间：<input id="timeStart" type="date" />  --  结束时间：<input id="timeEnd" type="date" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn_search"><i class="icon-search"></i>立即搜索</button>
+</div>
+
+<div class="box">
+    <div class="showData" style="height: 20px; transform: translateY(-10px); margin: auto 230px;/*background-color: #00C1B3*/">
+        <ul>
+            <li id="temp" style="cursor: pointer;">温度</li>
+            <li>|</li>
+            <li id="humidity" style="cursor: pointer;">湿度</li>
+            <li>|</li>
+            <li id="leakElec" style="cursor: pointer;">泄漏电流</li>
+            <li>|</li>
+            <li id="acionCount" style="cursor: pointer;">动作次数</li>
+            <li id="newtemper" style="cursor: pointer;display: none;">温度采集器</li>
+        </ul>
+    </div>
+</div>
+<div class="box" style="width: 100%;">
+    <div id="Statistics" style="position: relative">
+        <div id="mains_temp" style="height:300px; overflow:hidden;position: relative;" ></div>
+        <div id="mains_humidity" style="height:300px; overflow:hidden;position: relative;" ></div>
+        <div id="mains_leakElec" style="height:300px; overflow:hidden;position: relative;" ></div>
+        <div id="mains_acionCount" style="height:300px; overflow:hidden;position: relative;" ></div>
+        <div id="mains_newtemper" style="height:300px; overflow:hidden;position: relative;" ></div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
+<script src="js/common.js?v=1.6.22"></script>
+<script>
+    // 默认点击第一个
+    sessionStorage.tabID = 'eric';
+    // 波形图初始化
+    var myChart_mains_temp = echarts.init(document.getElementById('mains_temp'));
+    var myChart_mains_humidity = echarts.init(document.getElementById('mains_humidity'));
+    var myChart_mains_leakElec = echarts.init(document.getElementById('mains_leakElec'));
+    var myChart_mains_acionCount = echarts.init(document.getElementById('mains_acionCount'));
+    var myChart_mains_newtemper = echarts.init(document.getElementById('mains_newtemper'));
+
+    var nullDataDom = '<p class="nullData"><i>查询数据为空...</i></p>';/*查询数据为空时的dom结构*/
+    var mydate=new Date();//通过new方法创建对象
+    var _year = mydate.getFullYear();
+    var _month = (mydate.getMonth()+1)<10?'0'+(mydate.getMonth()+1):mydate.getMonth()+1;
+    var _date = mydate.getDate()<10?'0'+mydate.getDate():mydate.getDate();
+    var _mydate = _year+'-'+_month+'-'+_date;
+    if($('#timeStart').val()){
+        timeStart = $('#timeStart').val()+' 00:00:00:000';
+    }else{
+        $('#timeStart').val(_mydate);
+        timeStart = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 00:00:00:000';
+    }
+    if($('#timeEnd').val()){
+        timeEnd = $('#timeEnd').val()+' 23:59:59:000';
+    }else{
+        $('#timeEnd').val(_mydate);
+        timeEnd = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 23:59:59:000';
+    }
+
+/*温度采集器*/
+$('#newtemper').click(function(){
+        $('#newtemper').addClass('color_action');
+        /*隐藏div图表*/
+        $(this).show(0).siblings().hide(0);
+        $('#mains_newtemper').removeClass('none');
+        $('#mains_temp').addClass('none');
+        $('#mains_humidity').addClass('none');
+        $('#mains_leakElec').addClass('none');
+        $('#mains_acionCount').addClass('none');
+        // myChart_mains_newtemper.showLoading();
+        organizationData('newtemper',sessionStorage.monitorFlag,timeStart,timeEnd);//  获取温度采集器的温度波形
+})
+
+$('#temp').click(function(){
+        $('#temp').addClass('color_action');
+        $('#humidity').removeClass('color_action');
+        $('#leakElec').removeClass('color_action');
+        $('#acionCount').removeClass('color_action');
+        
+        /*隐藏div图表*/
+        $(this).show(0).siblings().show(0);
+        $('#newtemper').hide(0);
+        $('#mains_temp').removeClass('none');
+        $('#mains_humidity').addClass('none');
+        $('#mains_leakElec').addClass('none');
+        $('#mains_acionCount').addClass('none');
+        $('#mains_newtemper').addClass('none');
+        // myChart_mains_temp.showLoading();
+        organizationData('temp',sessionStorage.monitorFlag,timeStart,timeEnd);//  获取温度采集器的温度波形
+})
+
+$('#humidity').click(function(){
+    $('#humidity').addClass('color_action');
+    $('#temp').removeClass('color_action');
+    $('#leakElec').removeClass('color_action');
+    $('#acionCount').removeClass('color_action');
+
+    /*隐藏div图表*/
+    $('#mains_temp').addClass('none');
+    $('#mains_humidity').removeClass('none');
+    $('#mains_leakElec').addClass('none');
+    $('#mains_acionCount').addClass('none');
+            // myChart_mains_humidity.showLoading();
+    organizationData('humidity',sessionStorage.monitorFlag,timeStart,timeEnd);// 获取过电压保护器的湿度波形
+})
+
+
+
+$('#leakElec').click(function(){
+    $('#leakElec').addClass('color_action');
+    $('#temp').removeClass('color_action');
+    $('#humidity').removeClass('color_action');
+    $('#acionCount').removeClass('color_action');
+
+    /*隐藏div图表*/
+    $('#mains_temp').addClass('none');
+    $('#mains_humidity').addClass('none');
+    $('#mains_leakElec').removeClass('none');
+    $('#mains_acionCount').addClass('none');
+            // myChart_mains_leakElec.showLoading();
+    organizationData('leakElec',sessionStorage.monitorFlag,timeStart,timeEnd);// 查询保护器泄漏电流波形
+
+})
+$('#acionCount').click(function(){
+   $('#acionCount').addClass('color_action');
+   $('#temp').removeClass('color_action');
+   $('#humidity').removeClass('color_action');
+   $('#leakElec').removeClass('color_action');
+
+   /*隐藏div图表*/
+   $('#mains_temp').addClass('none');
+   $('#mains_humidity').addClass('none');
+   $('#mains_leakElec').addClass('none');
+   $('#mains_acionCount').removeClass('none');
+        //  myChart_mains_acionCount.showLoading();
+   organizationData('acionCount',sessionStorage.monitorFlag,timeStart,timeEnd);// 查询保护器泄漏电流波形
+})
+
+
+    $('#btn-1').on('click', function(){
+        window.parent.$("#iframepage").attr("src",'back10_1_statisticsMater.html?v=1.6.22');
+    })
+
+    /*用户-查询*/
+    $('.btn_search').bind('click',function(e){
+        init(sessionStorage.monitorFlag)
+    });
+
+    function  manageQueryData(){}
+
+    // 查询时间数据,不存在则默认当天0点到24点,
+    var timeStart ;
+    var timeEnd ;
+
+    // 获取过电压保护器的湿度
+    var xAxis_time_name=[];// 时间戳
+
+    var series_temper_a=[];// A相温度；
+    var series_temper_b=[];// B相温度
+    var series_temper_c=[];// C相温度
+
+    var series_humidity_a=[];// A相湿度；
+    var series_humidity_b=[];// B相湿度
+    var series_humidity_c=[];// C相湿度
+
+    // 保护器泄漏电流
+    var series_leakElec_value=[];
+    // 所有相位动作次数
+    var series_acionCount_value=[];
+
+    //    organizationData('acionCount','B11');// 获取保护器的所有相位动作次数
+
+
+
+
+    function  organizationData(index,monitorFlag,timeStart,timeEnd){
+        $('.nullData').remove();
+        var data = {sensorId:monitorFlag,timeStart:timeStart,timeEnd:timeEnd};
+        data.token=sessionStorage.token;
+        if(index == 'temp'){  // 获取过电压保护器的温度
+//            var data = {sensorId:sessionStorage.monitorFlag,timeStart:'1970-01-01 00:00:00:000',timeEnd:'2018-05-26 01:00:00:000'};
+            xAxis_time_name=[];
+            series_temper_a=[];
+            series_temper_b=[];
+            series_temper_c=[];
+            $.ajax({
+                url:rooturl+'/eric/getTemperatureForVoltage.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#mains_temp').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_time_name.push(day_Arr[i].time);
+//                        xAxis_time_name.push(i);
+                                series_temper_a.push(day_Arr[i].temper_a);
+                                series_temper_b.push(day_Arr[i].temper_b);
+                                series_temper_c.push(day_Arr[i].temper_c);
+                            }
+                        };
+                        Statistics_btn('temp');// 展示图表
+                        myChart_mains_temp.hideLoading();
+                    }
+                }
+            });
+        }else if(index == 'humidity'){   // 获取过电压保护器的湿度
+            xAxis_time_name=[];
+            series_humidity_a=[];
+            series_humidity_b=[];
+            series_humidity_c=[];
+            $.ajax({
+                url:rooturl+'/eric/gethumidityForVoltage.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#mains_humidity').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_time_name.push(day_Arr[i].time);
+                                series_humidity_a.push(day_Arr[i].humidity_a);
+                                series_humidity_b.push(day_Arr[i].humidity_b);
+                                series_humidity_c.push(day_Arr[i].humidity_c);
+                            }
+                        };
+                        Statistics_btn('humidity');// 展示图表
+                        myChart_mains_humidity.hideLoading();
+                    }
+                }
+            });
+        } else if(index == 'leakElec'){  // 查询保护器泄漏电流
+            xAxis_time_name=[];
+            series_leakElec_value=[];
+            $.ajax({
+                url:rooturl+'/eric/getLeakElecForId.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#mains_leakElec').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_time_name.push(day_Arr[i].time);
+                                series_leakElec_value.push(day_Arr[i].electric);
+                            }
+                        };
+                        Statistics_btn('leakElec');// 展示图表
+                        myChart_mains_leakElec.hideLoading();
+                    }
+                }
+            });
+        } else if(index == 'acionCount'){  // 获取保护器的所有相位动作次数
+            xAxis_time_name=[];
+            series_acionCount_value=[];
+            $.ajax({
+                url:rooturl+'/eric/getAcionCountForValue.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#mains_acionCount').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                xAxis_time_name.push(day_Arr[i].valueflag_value);
+                                series_acionCount_value.push(day_Arr[i].count);
+                            }
+                        };
+                        Statistics_btn('acionCount');// 展示图表
+                        myChart_mains_acionCount.hideLoading();
+                    }
+                }
+            });
+        } else if(index == 'newtemper'){  // 获取温度采集器
+            xAxis_time_name=[];
+            series_newtemper_value=[];
+            var data = {monitorFlag:monitorFlag,timeStart:timeStart,timeEnd:timeEnd};
+            $.ajax({
+                url:rooturl+'/eric/getTemper_data.v1',
+                data:data,
+                type:'post',
+                success:function(res){
+                    if (res.code == '0') {
+                        var day_Arr = res.data;
+                        if(day_Arr.length <= 0){
+                            $('#mains_newtemper').append(nullDataDom);
+                        }else{
+                            for(var i=0;i<day_Arr.length;i++){
+                                var _time = new Date(parseInt(day_Arr[i].timestamp)).toLocaleString('chinese',{hour12:false}).replace(/\//g,'-');
+                                var _val = day_Arr[i].temper;
+                                xAxis_time_name.push(_time);
+                                series_newtemper_value.push(_val);
+                            }
+                        };
+                        Statistics_btn('newtemper');// 展示图表
+                        myChart_mains_newtemper.hideLoading();
+                    }
+                }
+            });
+        }
+
+
+    }
+
+
+
+    function Statistics_btn(index){
+        if(index ==  'temp' ){
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '温度',
+                    x:'20',
+                    y:'0'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['A相温度','B相温度','C相温度'],
+                    x:'20px',
+                    y:'30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+//                                axisLabel: {
+//                                    textStyle:{
+//                                        fontWeight:"bolder",
+//                                        color:"#000000"
+//                                    },
+//                                    //X轴刻度配置
+//                                    interval:0 //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+//                                },
+                    data: xAxis_time_name
+                },
+                yAxis: {
+                    show:true,
+                    name : '温度(℃)',
+                    nameLocation:'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel : {
+                        formatter: '{value} ℃'
+                    }
+                },
+                series: [
+                    {
+                        name:'A相温度',
+                        type:'line',
+
+                        data: series_temper_a
+                    },
+                    {
+                        name:'B相温度',
+                        type:'line',
+                        data:series_temper_b
+                    },
+                    {
+                        name:'C相温度',
+                        type:'line',
+
+                        data:series_temper_c
+                    }
+
+                ]
+            };
+            myChart_mains_temp.clear();
+            myChart_mains_temp.setOption(option_one);
+        }else   if(index ==  'humidity' ){
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '湿度',
+                    x:'20',
+                    y:'0'
+                },
+                tooltip: {
+                    show: true,
+                    trigger: 'axis',
+                },
+                legend: {
+                    data:['A相湿度','B相湿度','C相湿度'],
+                    x:'20px',
+                    y:'30px'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+//                                axisLabel: {
+//                                    textStyle:{
+//                                        fontWeight:"bolder",
+//                                        color:"#000000"
+//                                    },
+//                                    //X轴刻度配置
+//                                    interval:0 //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+//                                },
+                    data: xAxis_time_name
+                },
+                yAxis: {
+                    show:true,
+                    name : '湿度(RH)',
+                    nameLocation:'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel : {
+                        formatter: '{value} RH'
+                    }
+                },
+                series: [
+                    {
+                        name:'A相湿度',
+                        type:'line',
+                        data: series_humidity_a
+                    },
+                    {
+                        name:'B相湿度',
+                        type:'line',
+                        data:series_humidity_b
+                    },
+                    {
+                        name:'C相湿度',
+                        type:'line',
+                        data:series_humidity_c
+                    }
+
+                ]
+            };
+            myChart_mains_humidity.clear();
+            myChart_mains_humidity.setOption(option_one);
+        }else   if(index ==  'leakElec' ){
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '泄漏电流',
+                    x:'20',
+                    y:'0'
+                },
+                tooltip: {
+                    show: true,
+                    trigger: 'axis',
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_time_name
+                },
+                yAxis: {
+                    show:true,
+                    name : '电流(μA)',
+                    nameLocation:'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel : {
+                        formatter: '{value} A'
+                    }
+                },
+                series: [
+                    {
+                        name:'电流值',
+                        type:'line',
+                        data: series_leakElec_value
+                    }
+                ]
+            };
+            myChart_mains_leakElec.clear();
+            myChart_mains_leakElec.setOption(option_one);
+        }else   if(index ==  'acionCount' ){
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '相位动作次数',
+                    x:'20',
+                    y:'0'
+                },
+                tooltip: {
+                    show: true,
+                    trigger: 'axis',
+                },
+               /* legend: {
+                    data:['A相湿度','B相湿度','C相湿度'],
+                    x:'20px',
+                    y:'30px'
+                },*/
+                grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                },
+               toolbox: {
+                    feature: {
+                        dataView: {show: false, readOnly: false},
+                        magicType: {show: false, type: [ 'bar']},
+                        restore: {show: false},
+                        saveAsImage: {show: true}
+                    }
+                },
+
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_time_name
+                },
+                yAxis: {
+                    name : '动作次数',
+                    nameLocation:'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel : {
+                        formatter: '{value} 次数'
+                    }
+                },
+                series: [
+                    {
+                        name:'动作次数',
+                        type:'bar',
+                        barMaxWidth: '50',
+                        data: series_acionCount_value,
+                        //设置柱体颜色
+                        itemStyle: {
+                            normal: {
+                                color: function(params) {
+                                    var colorList = ['#FB1734','#14AE68','#FFCD2D'];
+                                    return colorList[params.dataIndex]
+                                },
+                            }
+                        },
+                    }
+                ]
+            };
+            myChart_mains_acionCount.clear();
+            myChart_mains_acionCount.setOption(option_one);
+        }else   if(index ==  'newtemper' ){
+            option_one = {
+                color:['#FFCD2D', '#14AE68', '#FB1734', '#333'],
+                title: {
+                    text: '温度',
+                    x:'20',
+                    y:'0'
+                },
+                tooltip: {
+                    show: true,
+                    trigger: 'axis',
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: xAxis_time_name
+                },
+                yAxis: {
+                    show:true,
+                    name : '温度(℃)',
+                    nameLocation:'end',
+                    type: 'value',
+                    position: 'right',
+                    axisLabel : {
+                        formatter: '{value} ℃'
+                    }
+                },
+                series: [
+                    {
+                        name:'温度',
+                        type:'line',
+                        data: series_newtemper_value
+                    }
+                ]
+            };
+            myChart_mains_newtemper.clear();
+            myChart_mains_newtemper.setOption(option_one);
+        }
+
+    }
+
+
+
+   // 五级联动
+   POST('/sys/company/queryStaticThree.v1',{type:'5',createBy:sessionStorage.id},function(res){
+    //    console.log(res.data)
+       var tpl1='';
+       var tpl2='' ;
+       var tpl3='' ;
+       var tpl4='';
+       var tpl5='';
+       var x,y,z,m,n;
+       var k=0;var j=0;var l=0;var h=0;
+       for(var i=0;i<res.data.length;i++){
+           tpl1 +='<option value="'+ i +'">'+ res.data[i].companyName +'</option>';
+
+       }
+       for(let i of res.data[0].monitorStationDtos){
+           tpl2 +='<option value="'+ k +'">'+ i.stationName +'</option>';
+           k++;
+       }
+       for(let i of res.data[0].monitorStationDtos[0].linesOnMasterSortList){
+           tpl3+='<option value="'+ j +'">'+i.masterName +'</option>';
+           j++
+       }
+       for(let i of res.data[0].monitorStationDtos[0].linesOnMasterSortList[0].linesOnBranchDtos){
+           tpl4+='<option value="'+ l +'">'+i.branchName +'</option>';
+           l++
+       }
+       for(let i of res.data[0].monitorStationDtos[0].linesOnMasterSortList[0].linesOnBranchDtos[0].monitorPointDtos){
+           if(h==0){
+               sessionStorage.monitorFlag =i.monitorFlag;
+           }
+           tpl5+='<option data-type="'+i.hitchType+'" value="'+ h +'">'+i.pointName +'</option>';
+           h++
+       }
+       $('#company').append(tpl1);
+       $('#site').append(tpl2);
+       $('#generatrix').append(tpl3);
+       $('#linesOnBranch').append(tpl4);
+       $('#monitorPoint').append(tpl5);
+
+    //    init(sessionStorage.monitorFlag)
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+
+
+       $('#company').change(function(){
+           tpl2='';
+           tpl3='';
+           tpl4='';
+           tpl5='';
+           k=0;
+           j=0;
+           l=0;
+           h=0;
+           $('#site').empty();
+           $('#generatrix').empty();
+           $('#linesOnBranch').empty();
+           $('#monitorPoint').empty();
+           x=$('#company  option:selected').val();
+           parseInt(x);
+           for(let j of res.data[x].monitorStationDtos){
+               tpl2 +='<option value="'+ k +'">'+ j.stationName +'</option>';
+               k++;
+           }
+           for(let i of res.data[x].monitorStationDtos[0].linesOnMasterSortList){
+               tpl3+='<option value="'+ j +'">'+ i.masterName +'</option>';
+               j++;
+           }
+           for(let i of res.data[x].monitorStationDtos[0].linesOnMasterSortList[0].linesOnBranchDtos){
+               tpl4+='<option value="'+ l +'">'+i.branchName +'</option>';
+               l++;
+           }
+           if(res.data[x].monitorStationDtos[0].linesOnMasterSortList[0].linesOnBranchDtos.length>0){
+            for(let i of res.data[x].monitorStationDtos[0].linesOnMasterSortList[0].linesOnBranchDtos[0].monitorPointDtos){
+                if(h==0){
+    //                   alert(i.monitorFlag)
+                    sessionStorage.monitorFlag =i.monitorFlag;
+                }
+                tpl5+='<option data-type="'+i.hitchType+'" value="'+ h +'">'+i.pointName +'</option>';
+                h++;
+            }
+           }
+           $('#site').append(tpl2);
+           $('#generatrix').append(tpl3);
+           $('#linesOnBranch').append(tpl4);
+           $('#monitorPoint').append(tpl5);
+
+        //    init(sessionStorage.monitorFlag)
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+
+       })
+       $('#site').change(function(){
+           tpl3='';
+           tpl4='';
+           tpl5='';
+           j=0;
+           l=0;
+           h=0;
+           $('#generatrix').empty();
+           $('#linesOnBranch').empty();
+           $('#monitorPoint').empty();
+           x=$('#company  option:selected').val();
+           parseInt(x);
+           y=$('#site  option:selected').val();
+           parseInt(y);
+           for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList){
+               tpl3+='<option value="'+ j +'">'+ i.masterName+'</option>';
+               j++;
+           }
+           for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[0].linesOnBranchDtos){
+               tpl4+='<option value="'+ l +'">'+i.branchName +'</option>';
+               l++;
+           }
+           if(res.data[x].monitorStationDtos[y].linesOnMasterSortList[0].linesOnBranchDtos.length>0){
+            for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[0].linesOnBranchDtos[0].monitorPointDtos){
+                if(h==0){
+    //                   alert(i.monitorFlag)
+                    sessionStorage.monitorFlag =i.monitorFlag;
+                }
+                tpl5+='<option data-type="'+i.hitchType+'" value="'+ h +'">'+i.pointName +'</option>';
+                h++;
+            }
+           }
+           $('#generatrix').append(tpl3);
+           $('#linesOnBranch').append(tpl4);
+           $('#monitorPoint').append(tpl5);
+
+        //    init(sessionStorage.monitorFlag)
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+       })
+       $('#generatrix').change(function(){
+           tpl4='';
+           tpl5='';
+           l=0;
+           j=0;
+           h=0;
+           $('#linesOnBranch').empty();
+           $('#monitorPoint').empty();
+           z=$('#generatrix  option:selected').val();
+           parseInt(z);
+           x=$('#company  option:selected').val();
+           parseInt(x);
+           y=$('#site  option:selected').val();
+           parseInt(y);
+           for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[z].linesOnBranchDtos){
+
+               tpl4+='<option value="'+ l +'">'+i.branchName +'</option>';
+               l++;
+           }
+           if(res.data[x].monitorStationDtos[y].linesOnMasterSortList[z].linesOnBranchDtos.length>0){
+            for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[z].linesOnBranchDtos[0].monitorPointDtos){
+                if(h==0){
+    //                   alert(i.monitorFlag)
+                    sessionStorage.monitorFlag =i.monitorFlag;
+                }
+                tpl5+='<option data-type="'+i.hitchType+'" value="'+ h +'">'+i.pointName +'</option>';
+                h++;
+            }
+           }
+           $('#linesOnBranch').append(tpl4);
+           $('#monitorPoint').append(tpl5);
+
+        //    init(sessionStorage.monitorFlag)
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+
+       })
+       $('#linesOnBranch').change(function(){
+           tpl5='';
+           l=0;
+           j=0;
+           h=0;
+           $('#monitorPoint').empty();
+           m=$('#linesOnBranch  option:selected').val();
+           parseInt(m);
+           z=$('#generatrix  option:selected').val();
+           parseInt(z);
+           x=$('#company  option:selected').val();
+           parseInt(x);
+           y=$('#site  option:selected').val();
+           parseInt(y);
+           for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[z].linesOnBranchDtos[m].monitorPointDtos){
+               if(h==0){
+//                   alert(i.monitorFlag)
+                   sessionStorage.monitorFlag =i.monitorFlag;
+               }
+               tpl5+='<option data-type="'+i.hitchType+'" value="'+ h +'">'+i.pointName +'</option>';
+               h++;
+           }
+           $('#monitorPoint').append(tpl5);
+        //    init(sessionStorage.monitorFlag)
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+       })
+       $('#monitorPoint').change(function(){
+           l=0;
+           j=0;
+           h=0;
+           n=$('#monitorPoint  option:selected').val();
+           parseInt(n);
+           m=$('#linesOnBranch  option:selected').val();
+           parseInt(m);
+           z=$('#generatrix  option:selected').val();
+           parseInt(z);
+           x=$('#company  option:selected').val();
+           parseInt(x);
+           y=$('#site  option:selected').val();
+           parseInt(y);
+           for(let i of res.data[x].monitorStationDtos[y].linesOnMasterSortList[z].linesOnBranchDtos[m].monitorPointDtos){
+               if(h==n){
+//                   alert(i.monitorFlag);
+                   sessionStorage.monitorFlag =i.monitorFlag;
+               }
+               h++;
+           }
+        //    init(sessionStorage.monitorFlag);
+           /* 判断监测设备类型
+           hitchType=温度采集器||过电压保护器
+           */
+          var _t = '';
+          if($('#monitorPoint  option:selected')[0]){
+            _t = $('#monitorPoint  option:selected').data('type');
+          }
+          if(_t=='温度采集器'){
+            // alert('这是温度采集器')
+            $('.showData #newtemper').click();
+          }else{
+            // alert('这是过电压保护器')
+            $('.showData #temp').click();
+          }
+       })
+
+   });
+
+
+
+    function init(monitorFlag){
+        var mydate=new Date();//通过new方法创建对象
+        if($('#timeStart').val()){
+            timeStart = $('#timeStart').val()+' 00:00:00:000';
+        }else{
+//            timeStart = '1970-01-01 00:00:00:000';
+            timeStart = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 00:00:00:000';
+        }
+        if($('#timeEnd').val()){
+            timeEnd = $('#timeEnd').val()+' 23:59:59:000';
+        }else{
+//            timeEnd = '2018-06-26 01:00:00:000';
+            timeEnd = mydate.getFullYear()+'-'+(mydate.getMonth()+1)+'-'+mydate.getDate()+' 23:59:59:000';
+        }
+        
+        var _t = $('#monitorPoint  option:selected').data('type');
+        if(_t=='温度采集器'){
+        // alert('这是温度采集器')
+        $('.showData #newtemper').click();
+        }else{
+        // alert('这是过电压保护器')
+        $('.showData #temp').click();
+        }
+    }
+</script>
